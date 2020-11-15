@@ -31,4 +31,5 @@ export const colors = {
   white: "#fff",
   lightgrey: "#666",
   lowopacitygrey: "#999",
+  dark: "#222",
 };

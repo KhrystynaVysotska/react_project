@@ -1,6 +1,7 @@
 import React from "react";
 import Navigation from "./components/navigation/Navigation.js";
 import Layout from "./components/pages/Layout.js";
+import Footer from "./components/footer/Footer";
 import AppStyled from "./App.styled.js";
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
     <AppStyled>
       <Navigation />
       <Layout />
+      <Footer />
     </AppStyled>
   );
 }
