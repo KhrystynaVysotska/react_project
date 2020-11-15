@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+import { colors } from "../constants/Constants.js";
 const MenuStyled = styled.nav`
   ul {
     display: flex;
@@ -20,7 +20,7 @@ const MenuStyled = styled.nav`
     font-family: inherit;
   }
   .active {
-    color: #3f51b5;
+    color: ${colors.primary};
   }
 `;
 

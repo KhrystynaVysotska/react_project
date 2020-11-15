@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Badge from "@material-ui/core/Badge";
 import SearchIcon from "@material-ui/icons/Search";
@@ -7,10 +7,22 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import NavigationStyled from "../styles/Navigation.styled.js";
 import IconStyled from "../styles/Icon.styled.js";
 import MenuStyled from "../styles/Menu.styled.js";
+import { fontSize } from "../constants/Constants.js";
 
 function Navigation() {
+  const [scrolled, setScrolled] = useState(false);
+
+  const changeBackground = () => {
+    if (window.scrollY >= 84) {
+      setScrolled(true);
+    } else {
+      setScrolled(false);
+    }
+  };
+
+  window.addEventListener("scroll", changeBackground);
   return (
-    <NavigationStyled>
+    <NavigationStyled scrolled={scrolled}>
       <img
         src={"https://technext.github.io/cozastore/images/icons/logo-01.png"}
         alt="Logo"
