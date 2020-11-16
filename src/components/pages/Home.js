@@ -10,7 +10,7 @@ import SweaterCard from "../SweaterCard.js";
 import { sweaters } from "../Sweaters.js";
 import { fontSize } from "../constants/Constants.js";
 
-function Home() {
+function Home(props) {
   const button = {
     roundedButton: {
       borderRadius: "23px",
@@ -61,11 +61,11 @@ function Home() {
             return (
               <div key={key}>
                 <SweaterCard
+                  favorites={props.favorites}
+                  setFavorites={props.setFavorites}
+                  id={key}
                   image={sweater.image}
                   brand={sweater.brand}
-                  country={sweater.country}
-                  season={sweater.season}
-                  material={sweater.material}
                   size={sweater.size}
                   price={sweater.price}
                 />

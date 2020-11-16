@@ -12,6 +12,8 @@ export const fontSize = {
   fs4: DEFAULT_FONT_SIZE + "px",
   fs12: DEFAULT_FONT_SIZE * 3 + "px",
   fs16: DEFAULT_FONT_SIZE * 4 + "px",
+  fs20: DEFAULT_FONT_SIZE * 5 + "px",
+  fs24: DEFAULT_FONT_SIZE * 6 + "px",
   fs28: DEFAULT_FONT_SIZE * 7 + "px",
   fs36: DEFAULT_FONT_SIZE * 9 + "px",
   fs48: DEFAULT_FONT_SIZE * 12 + "px",
@@ -32,4 +34,8 @@ export const colors = {
   lightgrey: "#666",
   lowopacitygrey: "#999",
   dark: "#222",
+  twitter: "#03A9F4",
+  youtube: "#FF0000",
+  linkedin: "#007AB9",
+  facebook: "#007AB9",
 };

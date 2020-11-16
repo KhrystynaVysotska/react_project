@@ -15,26 +15,28 @@ const SweaterCardStyled = styled.nav`
     align-items: center;
     color: ${colors.lowopacitygrey};
     h1 {
+      font-size: ${fontSize.fs24};
       font-family: "Popins";
       line-height: 1.466667;
       font-weight: lighter;
     }
   }
-  .feature {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  .size {
     color: ${colors.grey};
     line-height: 1.6;
+    font-size: ${fontSize.fs16};
   }
   .price {
     color: ${colors.grey};
-    letter-spacing: 1px;
     line-height: 1.466667;
     font-weight: bold;
-    span {
-      padding-left: 13px;
-    }
+    font-size: ${fontSize.fs16};
+  }
+  span {
+    padding-left: 13px;
+  }
+  .card_content {
+    padding: 0 15px;
   }
 `;
 

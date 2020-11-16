@@ -4,7 +4,7 @@ import Home from "../pages/Home.js";
 import Catalog from "../pages/Catalog.js";
 import Cart from "../pages/Cart.js";
 
-function Layout() {
+function Layout({ favorites, setFavorites }) {
   return (
     <Switch>
       <Route path="/cart">
@@ -14,7 +14,7 @@ function Layout() {
         <Catalog />
       </Route>
       <Route path="/">
-        <Home />
+        <Home favorites={favorites} setFavorites={setFavorites} />
       </Route>
     </Switch>
   );

@@ -9,7 +9,7 @@ import IconStyled from "../styles/Icon.styled.js";
 import MenuStyled from "../styles/Menu.styled.js";
 import { fontSize } from "../constants/Constants.js";
 
-function Navigation() {
+function Navigation(props) {
   const [scrolled, setScrolled] = useState(false);
 
   const changeBackground = () => {
@@ -54,7 +54,12 @@ function Navigation() {
         <Badge color="primary" overlap="circle" badgeContent={0} showZero>
           <ShoppingCartIcon />
         </Badge>
-        <Badge color="primary" overlap="circle" badgeContent={0} showZero>
+        <Badge
+          color="primary"
+          overlap="circle"
+          badgeContent={props.favorites.length}
+          showZero
+        >
           <FavoriteBorderIcon />
         </Badge>
       </IconStyled>
