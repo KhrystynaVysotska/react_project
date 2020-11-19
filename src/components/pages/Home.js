@@ -57,13 +57,13 @@ function Home(props) {
           </div>
         </div>
         <div className="cards">
-          {sweaters.map((sweater, key) => {
+          {sweaters.map((sweater, index) => {
             return (
-              <div key={key}>
+              <div key={sweater.id}>
                 <SweaterCard
                   favorites={props.favorites}
                   setFavorites={props.setFavorites}
-                  id={key}
+                  id={sweater.id}
                   image={sweater.image}
                   brand={sweater.brand}
                   size={sweater.size}

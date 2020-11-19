@@ -5,6 +5,7 @@ import sweater3 from "../images/sweater3.jpg";
 
 export const sweaters = [
   {
+    id: 0,
     image: sweater1,
     brand: "Nadine",
     country: "Italy",
@@ -14,6 +15,7 @@ export const sweaters = [
     price: "234.3",
   },
   {
+    id: 1,
     image: sweater2,
     brand: "La Cause",
     country: "France",
@@ -23,6 +25,7 @@ export const sweaters = [
     price: "454.25",
   },
   {
+    id: 2,
     image: sweater3,
     brand: "TopHat",
     country: "Ukraine",
