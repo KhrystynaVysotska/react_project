@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Badge from "@material-ui/core/Badge";
-import SearchIcon from "@material-ui/icons/Search";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import NavigationStyled from "../styles/Navigation.styled.js";
@@ -50,7 +49,6 @@ function Navigation(props) {
       </MenuStyled>
 
       <IconStyled>
-        <SearchIcon />
         <Badge color="primary" overlap="circle" badgeContent={0} showZero>
           <ShoppingCartIcon />
         </Badge>
