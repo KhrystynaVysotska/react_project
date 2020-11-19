@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import MainSlider from "../slider/MainSlider.js";
-import HomeStyled from "../styles/Home.styled.js";
+import LoadMoreButtonStyled from "../styles/LoadMoreButton.styled.js";
+import ProductOverviewPanelStyled from "../styles/ProductOverviewPanel.styled.js";
 import MenuStyled from "../styles/Menu.styled.js";
+import CardsStyled from "../styles/Cards.styled.js";
 import Container from "../styles/Container.js";
 import Button from "@material-ui/core/Button";
-import FilterListIcon from "@material-ui/icons/FilterList";
-import SearchIcon from "@material-ui/icons/Search";
 import SweaterCard from "../SweaterCard.js";
 import { sweaters } from "../Sweaters.js";
 import { fontSize } from "../constants/Constants.js";
@@ -25,51 +25,35 @@ function Home(props) {
       behavior: "smooth",
       block: "center",
     });
-    {
-      elementsToShow == 3
-        ? setElementsToShow(sweaters.length)
-        : setElementsToShow(3);
-    }
+    elementsToShow === 3
+      ? setElementsToShow(sweaters.length)
+      : setElementsToShow(3);
   };
   return (
-    <HomeStyled>
+    <div>
       <MainSlider />
       <Container>
-        <div className="product_overview">
+        <ProductOverviewPanelStyled>
           <h1>Product Overview</h1>
           <div className="options">
             <MenuStyled>
               <ul>
                 <li>
-                  <a className="active">All clothes</a>
+                  <a href="/#" className="active">
+                    All clothes
+                  </a>
                 </li>
                 <li>
-                  <a>Women</a>
+                  <a href="/#">Women</a>
                 </li>
                 <li>
-                  <a>Men</a>
+                  <a href="/#">Men</a>
                 </li>
               </ul>
             </MenuStyled>
-            <div className="buttons">
-              <Button
-                size="large"
-                variant="outlined"
-                startIcon={<FilterListIcon />}
-              >
-                Filter
-              </Button>
-              <Button
-                size="large"
-                variant="outlined"
-                startIcon={<SearchIcon />}
-              >
-                Search
-              </Button>
-            </div>
           </div>
-        </div>
-        <div className="cards">
+        </ProductOverviewPanelStyled>
+        <CardsStyled>
           {sweaters.slice(0, elementsToShow).map((sweater, index) => {
             return (
               <div id={sweater.id} key={sweater.id}>
@@ -85,8 +69,8 @@ function Home(props) {
               </div>
             );
           })}
-        </div>
-        <div className="load_more">
+        </CardsStyled>
+        <LoadMoreButtonStyled>
           <Button
             size="large"
             variant="contained"
@@ -94,11 +78,11 @@ function Home(props) {
             style={button.roundedButton}
             onClick={() => handleLoadMore()}
           >
-            {elementsToShow == 3 ? "Load More" : "Show Less"}
+            {elementsToShow === 3 ? "Load More" : "Show Less"}
           </Button>
-        </div>
+        </LoadMoreButtonStyled>
       </Container>
-    </HomeStyled>
+    </div>
   );
 }
 
