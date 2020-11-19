@@ -7,6 +7,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import SweaterCardStyled from "./styles/SweaterCard.styled";
+import Button from "@material-ui/core/Button";
 
 function SweaterCard({
   favorites,
@@ -50,17 +51,22 @@ function SweaterCard({
               </div>
               <div className="size">
                 <p>
-                  Size:<span>{size}</span>
+                  Size:<span className="value">{size}</span>
                 </p>
               </div>
               <div className="price">
                 <p>
-                  Price:<span>${price}</span>
+                  Price:<span className="value">${price}</span>
                 </p>
               </div>
             </div>
           </CardContent>
         </CardActionArea>
+        <CardActions className="view_button">
+          <Button id={"view-button-" + id} color="primary">
+            View
+          </Button>
+        </CardActions>
       </Card>
     </SweaterCardStyled>
   );
