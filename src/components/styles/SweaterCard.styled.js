@@ -15,7 +15,7 @@ const SweaterCardStyled = styled.nav`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: ${colors.lowopacitygrey};
+    color: ${colors.lightgrey};
     h1 {
       font-size: ${fontSize.fs24};
       font-family: "Popins";
@@ -24,21 +24,32 @@ const SweaterCardStyled = styled.nav`
     }
   }
   .size {
+    p {
+      margin: 5px 0;
+    }
     color: ${colors.grey};
     line-height: 1.6;
     font-size: ${fontSize.fs16};
   }
   .price {
+    p {
+      margin: 5px 0;
+    }
     color: ${colors.grey};
     line-height: 1.466667;
     font-weight: bold;
     font-size: ${fontSize.fs16};
   }
-  span {
+  .value {
     padding-left: 13px;
   }
   .card_content {
     padding: 0 15px;
+  }
+  .view_button {
+    align-items: center;
+    display: flex;
+    justify-content: center;
   }
 `;
 
