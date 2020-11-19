@@ -31,7 +31,7 @@ function MainSlider() {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 3000,
     cssEase: "linear",
     prevArrow: <PrevArrow />,
     nextArrow: <NextArrow />,

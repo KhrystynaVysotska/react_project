@@ -37,7 +37,7 @@ const HomeStyled = styled.div`
     justify-content: space-between;
   }
   .load_more {
-    margin-top: 70px;
+    margin-top: ${fontSize.fs24};
     width: 100%;
     text-align: center;
   }

@@ -5,6 +5,8 @@ import { fontSize, colors } from "../constants/Constants.js";
 const SweaterCardStyled = styled.nav`
   .card {
     width: ${fontSize.fs296};
+    background-color: ${colors.card};
+    margin-bottom: ${fontSize.fs48};
   }
   .media {
     height: ${fontSize.fs296};

@@ -38,4 +38,5 @@ export const colors = {
   youtube: "#FF0000",
   linkedin: "#007AB9",
   facebook: "#007AB9",
+  card: "#dcdce35e",
 };

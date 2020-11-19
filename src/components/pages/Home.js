@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import MainSlider from "../slider/MainSlider.js";
 import HomeStyled from "../styles/Home.styled.js";
 import MenuStyled from "../styles/Menu.styled.js";
@@ -11,12 +11,25 @@ import { sweaters } from "../Sweaters.js";
 import { fontSize } from "../constants/Constants.js";
 
 function Home(props) {
+  const [elementsToShow, setElementsToShow] = useState(3);
   const button = {
     roundedButton: {
       borderRadius: "23px",
       height: fontSize.fs48,
       minWidth: fontSize.fs160,
     },
+  };
+  const handleLoadMore = () => {
+    const elemToScrollTo = document.getElementById(0);
+    elemToScrollTo.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+    {
+      elementsToShow == 3
+        ? setElementsToShow(sweaters.length)
+        : setElementsToShow(3);
+    }
   };
   return (
     <HomeStyled>
@@ -57,9 +70,9 @@ function Home(props) {
           </div>
         </div>
         <div className="cards">
-          {sweaters.map((sweater, index) => {
+          {sweaters.slice(0, elementsToShow).map((sweater, index) => {
             return (
-              <div key={sweater.id}>
+              <div id={sweater.id} key={sweater.id}>
                 <SweaterCard
                   favorites={props.favorites}
                   setFavorites={props.setFavorites}
@@ -79,8 +92,9 @@ function Home(props) {
             variant="contained"
             color="primary"
             style={button.roundedButton}
+            onClick={() => handleLoadMore()}
           >
-            Load More
+            {elementsToShow == 3 ? "Load More" : "Show Less"}
           </Button>
         </div>
       </Container>
