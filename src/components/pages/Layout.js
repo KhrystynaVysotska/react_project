@@ -11,7 +11,7 @@ function Layout({ favorites, setFavorites }) {
         <Cart />
       </Route>
       <Route path="/catalog">
-        <Catalog />
+        <Catalog favorites={favorites} setFavorites={setFavorites} />
       </Route>
       <Route path="/">
         <Home favorites={favorites} setFavorites={setFavorites} />
