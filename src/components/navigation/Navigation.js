@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { NavLink } from "react-router-dom";
 import Badge from "@material-ui/core/Badge";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
@@ -6,20 +6,27 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import NavigationStyled from "../styles/Navigation.styled.js";
 import IconStyled from "../styles/Icon.styled.js";
 import MenuStyled from "../styles/Menu.styled.js";
-import { fontSize } from "../constants/Constants.js";
+import { useGlobalContext } from "../../context/globalState";
 
-function Navigation(props) {
+function Navigation() {
+  const { favorites } = useGlobalContext();
   const [scrolled, setScrolled] = useState(false);
 
-  const changeBackground = () => {
+  const changeBackground = useCallback(() => {
     if (window.scrollY >= 84) {
       setScrolled(true);
     } else {
       setScrolled(false);
     }
-  };
+  }, []);
 
-  window.addEventListener("scroll", changeBackground);
+  useEffect(() => {
+    window.addEventListener("scroll", changeBackground);
+    return () => {
+      window.removeEventListener("scroll", changeBackground);
+    };
+  }, [changeBackground]);
+
   return (
     <NavigationStyled scrolled={scrolled}>
       <img
@@ -55,7 +62,7 @@ function Navigation(props) {
         <Badge
           color="primary"
           overlap="circle"
-          badgeContent={props.favorites.length}
+          badgeContent={favorites.length}
           showZero
         >
           <FavoriteBorderIcon />

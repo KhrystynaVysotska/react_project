@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { colors } from "../constants/Constants.js";
 const MenuStyled = styled.nav`

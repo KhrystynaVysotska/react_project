@@ -2,7 +2,7 @@ import React from "react";
 import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
 import PrevArrowStyled from "../styles/PrevArrow.styled.js";
 import IconButton from "@material-ui/core/IconButton";
-import { fontSize, colors } from "../constants/Constants.js";
+import { fontSize } from "../constants/Constants.js";
 
 function PrevArrow(props) {
   const { onClick } = props;
@@ -14,7 +14,7 @@ function PrevArrow(props) {
   };
   return (
     <PrevArrowStyled>
-      <IconButton color={colors.lightgrey} onClick={onClick}>
+      <IconButton onClick={onClick}>
         <ArrowLeftIcon style={styles.largeIcon} />
       </IconButton>
     </PrevArrowStyled>

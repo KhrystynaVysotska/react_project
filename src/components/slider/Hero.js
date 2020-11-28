@@ -1,11 +1,13 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import { fontSize, colors } from "../constants/Constants.js";
+import { fontSize } from "../constants/Constants.js";
 
 function Hero({ title, description }) {
+  let history = useHistory();
   const button = {
     roundedButton: {
-      borderRadius: "23px",
+      borderRadius: fontSize.fs24,
       height: fontSize.fs48,
       minWidth: fontSize.fs160,
     },
@@ -20,6 +22,7 @@ function Hero({ title, description }) {
         variant="contained"
         size="large"
         style={button.roundedButton}
+        onClick={() => history.push("/catalog")}
       >
         SHOP NOW
       </Button>

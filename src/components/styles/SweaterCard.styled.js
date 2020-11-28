@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { fontSize, colors } from "../constants/Constants.js";
 
@@ -38,6 +37,14 @@ const SweaterCardStyled = styled.nav`
     color: ${colors.grey};
     line-height: 1.466667;
     font-weight: bold;
+    font-size: ${fontSize.fs16};
+  }
+  .description {
+    p {
+      margin: 5px 0;
+    }
+    color: ${colors.grey};
+    line-height: 1.6;
     font-size: ${fontSize.fs16};
   }
   .value {

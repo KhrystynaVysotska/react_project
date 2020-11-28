@@ -6,7 +6,7 @@ import MenuStyled from "../styles/Menu.styled.js";
 import CardsStyled from "../styles/Cards.styled.js";
 import Container from "../styles/Container.js";
 import Button from "@material-ui/core/Button";
-import SweaterCard from "../SweaterCard.js";
+import SweaterDescriptionCard from "../SweaterDescriptionCard.js";
 import { sweaters } from "../Sweaters.js";
 import { fontSize } from "../constants/Constants.js";
 
@@ -14,7 +14,7 @@ function Home(props) {
   const [elementsToShow, setElementsToShow] = useState(3);
   const button = {
     roundedButton: {
-      borderRadius: "23px",
+      borderRadius: fontSize.fs24,
       height: fontSize.fs48,
       minWidth: fontSize.fs160,
     },
@@ -30,7 +30,7 @@ function Home(props) {
       : setElementsToShow(3);
   };
   return (
-    <div>
+    <>
       <MainSlider />
       <Container>
         <ProductOverviewPanelStyled>
@@ -57,15 +57,7 @@ function Home(props) {
           {sweaters.slice(0, elementsToShow).map((sweater, index) => {
             return (
               <div id={sweater.id} key={sweater.id}>
-                <SweaterCard
-                  favorites={props.favorites}
-                  setFavorites={props.setFavorites}
-                  id={sweater.id}
-                  image={sweater.image}
-                  brand={sweater.brand}
-                  size={sweater.size}
-                  price={sweater.price}
-                />
+                <SweaterDescriptionCard sweater={sweater} />
               </div>
             );
           })}
@@ -82,7 +74,7 @@ function Home(props) {
           </Button>
         </LoadMoreButtonStyled>
       </Container>
-    </div>
+    </>
   );
 }
 

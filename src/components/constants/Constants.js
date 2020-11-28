@@ -1,5 +1,3 @@
-import React from "react";
-
 const DEFAULT_FONT_SIZE = 4;
 
 export const slides = [

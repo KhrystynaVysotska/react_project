@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Slider from "react-slick";
 import { slides } from "../constants/Constants";
 import MainSliderStyled from "../styles/MainSlider.styled.js";
@@ -24,7 +23,6 @@ function MainSlider() {
     },
   ];
   const settings = {
-    adaptiveHeight: true,
     fade: true,
     infinite: true,
     speed: 500,

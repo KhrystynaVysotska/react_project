@@ -1,6 +1,5 @@
-import React from "react";
 import styled from "styled-components";
-import { fontSize, colors } from "../constants/Constants.js";
+import { colors } from "../constants/Constants.js";
 
 const Container = styled.footer`
   background-color: ${colors.white};

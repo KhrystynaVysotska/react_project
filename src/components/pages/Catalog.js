@@ -10,7 +10,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import Button from "@material-ui/core/Button";
 
-function Catalog(props) {
+function Catalog() {
   return (
     <Container>
       <CatalogStyled>
@@ -33,6 +33,7 @@ function Catalog(props) {
             </MenuStyled>
             <div className="buttons">
               <Button
+                id="filter"
                 size="large"
                 variant="outlined"
                 startIcon={<FilterListIcon />}
@@ -40,6 +41,7 @@ function Catalog(props) {
                 Filter
               </Button>
               <Button
+                id="search"
                 size="large"
                 variant="outlined"
                 startIcon={<SearchIcon />}
@@ -53,15 +55,7 @@ function Catalog(props) {
           {sweaters.map((sweater, index) => {
             return (
               <div id={sweater.id} key={sweater.id}>
-                <SweaterCard
-                  favorites={props.favorites}
-                  setFavorites={props.setFavorites}
-                  id={sweater.id}
-                  image={sweater.image}
-                  brand={sweater.brand}
-                  size={sweater.size}
-                  price={sweater.price}
-                />
+                <SweaterCard sweater={sweater} />
               </div>
             );
           })}
