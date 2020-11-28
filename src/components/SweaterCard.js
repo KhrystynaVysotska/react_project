@@ -8,62 +8,52 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import SweaterCardStyled from "./styles/SweaterCard.styled";
 import Button from "@material-ui/core/Button";
+import { useGlobalContext } from "../context/globalState";
+import { ADD_FAVORITE, REMOVE_FAVORITE } from "../context/actions";
 
-function SweaterCard({
-  favorites,
-  setFavorites,
-  id,
-  image,
-  brand,
-  size,
-  price,
-}) {
-  const addFavorite = (id) => {
-    let array = favorites.slice();
-    if (!array.includes(id)) {
-      array.push(id);
-    }
-    setFavorites(array);
-    console.log(favorites);
-  };
-  const removeFavorite = (id) => {
-    let array = favorites.filter((element) => element !== id);
-    setFavorites(array);
-    console.log(favorites);
+function SweaterCard({ sweater }) {
+  const { dispatch, favorites } = useGlobalContext();
+  const toggleFavorite = (sweater, action) => {
+    dispatch({
+      type: action,
+      payload: sweater,
+    });
   };
   return (
     <SweaterCardStyled>
       <Card className="card">
         <CardActionArea>
-          <CardMedia className="media" image={image} title="Sweater" />
+          <CardMedia className="media" image={sweater.image} title="Sweater" />
           <CardContent>
             <div className="card_content">
               <div className="brand">
-                <h1>{brand}</h1>
-                {favorites.includes(id) ? (
+                <h1>{sweater.brand}</h1>
+                {favorites.includes(sweater) ? (
                   <FavoriteIcon
                     color="primary"
-                    onClick={() => removeFavorite(id)}
+                    onClick={() => toggleFavorite(sweater, REMOVE_FAVORITE)}
                   />
                 ) : (
-                  <FavoriteBorderIcon onClick={() => addFavorite(id)} />
+                  <FavoriteBorderIcon
+                    onClick={() => toggleFavorite(sweater, ADD_FAVORITE)}
+                  />
                 )}
               </div>
               <div className="size">
                 <p>
-                  Size:<span className="value">{size}</span>
+                  Size:<span className="value">{sweater.size}</span>
                 </p>
               </div>
               <div className="price">
                 <p>
-                  Price:<span className="value">${price}</span>
+                  Price:<span className="value">${sweater.price}</span>
                 </p>
               </div>
             </div>
           </CardContent>
         </CardActionArea>
         <CardActions className="view_button">
-          <Button id={"view-button-" + id} color="primary">
+          <Button id={"view-button-" + sweater.id} color="primary">
             View
           </Button>
         </CardActions>
