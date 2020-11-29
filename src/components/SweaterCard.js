@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -13,6 +14,8 @@ import { ADD_FAVORITE, REMOVE_FAVORITE } from "../context/actions";
 
 function SweaterCard({ sweater }) {
   const { dispatch, favorites } = useGlobalContext();
+  let history = useHistory();
+  let location = useLocation();
   const toggleFavorite = (sweater, action) => {
     dispatch({
       type: action,
@@ -39,6 +42,11 @@ function SweaterCard({ sweater }) {
                   />
                 )}
               </div>
+              <div className="country">
+                <p>
+                  Country:<span className="value">{sweater.country}</span>
+                </p>
+              </div>
               <div className="size">
                 <p>
                   Size:<span className="value">{sweater.size}</span>
@@ -53,7 +61,18 @@ function SweaterCard({ sweater }) {
           </CardContent>
         </CardActionArea>
         <CardActions className="view_button">
-          <Button id={"view-button-" + sweater.id} color="primary">
+          <Button
+            id={"view-button-" + sweater.id}
+            color="primary"
+            onClick={() =>
+              history.push({
+                pathname: `/item/${sweater.id}`,
+                state: {
+                  background: location,
+                },
+              })
+            }
+          >
             View
           </Button>
         </CardActions>
