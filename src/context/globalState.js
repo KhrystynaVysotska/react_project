@@ -1,19 +1,21 @@
 import { createContext, useReducer, useContext } from "react";
-import favoritesReducer from "./reducer";
+import globalReducer from "./reducer";
 
 const initialState = {
   favorites: [],
+  sweaters: [],
 };
 
 export const GlobalContext = createContext(initialState);
 
 export const GlobalProvider = ({ value, children }) => {
-  const [state, dispatch] = useReducer(favoritesReducer, initialState);
+  const [state, dispatch] = useReducer(globalReducer, initialState);
 
   return (
     <GlobalContext.Provider
       value={{
         favorites: state.favorites,
+        sweaters: state.sweaters,
         dispatch,
         ...value,
       }}

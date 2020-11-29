@@ -1,2 +1,7 @@
 export const ADD_FAVORITE = "ADD_FAVORITE";
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
+
+export const ADD_SWEATER = "ADD_SWEATER";
+export const REMOVE_SWEATER = "REMOVE_SWEATER";
+export const INIT_SWEATERS = "INIT_SWEATERS";
+export const UPDATE_SWEATER = "EDIT_SWEATER";
