@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getAllSweaters } from "../../api/api";
 import { useGlobalContext } from "../../context/globalState";
 import { INIT_SWEATERS } from "../../context/actions";
@@ -11,16 +11,28 @@ import MenuStyled from "../styles/Menu.styled.js";
 import SearchIcon from "@material-ui/icons/Search";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import Button from "@material-ui/core/Button";
+import SearchField from "../SearchField.js";
 
 function Catalog() {
   const { dispatch, sweaters } = useGlobalContext();
+  const [searchOpened, setSearchOpened] = useState(false);
+  const [foundedSweaters, setFoundedSweaters] = useState([]);
+
   useEffect(() => {
     const data = getAllSweaters();
+    setFoundedSweaters(data);
     dispatch({
       type: INIT_SWEATERS,
       payload: data,
     });
   }, [dispatch]);
+
+  const handleChange = (event) => {
+    let brand = event.target.value;
+    setFoundedSweaters(
+      sweaters.filter((sweater) => sweater.brand.includes(brand))
+    );
+  };
 
   return (
     <Container>
@@ -51,19 +63,23 @@ function Catalog() {
               >
                 Filter
               </Button>
-              <Button
-                id="search"
-                size="large"
-                variant="outlined"
-                startIcon={<SearchIcon />}
-              >
-                Search
-              </Button>
+              {!searchOpened && (
+                <Button
+                  id="search"
+                  size="large"
+                  variant="outlined"
+                  startIcon={<SearchIcon />}
+                  onClick={() => setSearchOpened(true)}
+                >
+                  Search
+                </Button>
+              )}
+              {searchOpened && <SearchField handleChange={handleChange} />}
             </div>
           </div>
         </ProductOverviewPanelStyled>
         <CardsStyled>
-          {sweaters.map((sweater, index) => {
+          {foundedSweaters.map((sweater, index) => {
             return (
               <div id={sweater.id} key={sweater.id}>
                 <SweaterCard sweater={sweater} />

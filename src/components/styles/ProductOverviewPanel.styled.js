@@ -27,7 +27,7 @@ const ProductOverviewPanelStyled = styled.div`
   .buttons {
     display: flex;
   }
-  .buttons button {
+  .buttons >* {
     margin-left: 15px;
   }
 `;
