@@ -17,6 +17,7 @@ function SearchField({ handleChange, handleBlur }) {
         placeholder="Enter brand"
         onChange={handleChange}
         onBlur={handleBlur}
+        autoFocus={true}
       />
     </Paper>
   );
