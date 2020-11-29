@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { getAllSweaters } from "../../api/api";
+import { useGlobalContext } from "../../context/globalState";
+import { INIT_SWEATERS } from "../../context/actions";
 import CardsStyled from "../styles/Cards.styled.js";
 import CatalogStyled from "../styles/Catalog.styled.js";
 import Container from "../styles/Container.js";
-import { sweaters } from "../Sweaters.js";
 import SweaterCard from "../SweaterCard.js";
 import ProductOverviewPanelStyled from "../styles/ProductOverviewPanel.styled.js";
 import MenuStyled from "../styles/Menu.styled.js";
@@ -11,6 +13,15 @@ import FilterListIcon from "@material-ui/icons/FilterList";
 import Button from "@material-ui/core/Button";
 
 function Catalog() {
+  const { dispatch, sweaters } = useGlobalContext();
+  useEffect(() => {
+    const data = getAllSweaters();
+    dispatch({
+      type: INIT_SWEATERS,
+      payload: data,
+    });
+  }, [dispatch]);
+
   return (
     <Container>
       <CatalogStyled>
