@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { getAllSweaters } from "../../api/api";
 import { useGlobalContext } from "../../context/globalState";
 import { INIT_SWEATERS } from "../../context/actions";
@@ -27,16 +27,28 @@ function Catalog() {
     });
   }, [dispatch]);
 
-  const handleChange = (event) => {
-    let brand = event.target.value;
-    setFoundedSweaters(
-      sweaters.filter((sweater) => sweater.brand.includes(brand))
-    );
-  };
+  const handleChange = useCallback(
+    (event) => {
+      let brand = event.target.value;
+      setFoundedSweaters(
+        sweaters.filter((sweater) => sweater.brand.includes(brand))
+      );
+    },
+    [sweaters]
+  );
 
-  const handleBlur = () => {
-    setSearchOpened(false);
-  };
+  const handleBlur = useCallback(
+    (event) => {
+      if (event.target.value.length === 0) {
+        setSearchOpened(false);
+      } else if (event.target.value.match("[\\s]+")) {
+        setSearchOpened(false);
+        setFoundedSweaters(sweaters);
+      }
+    },
+    [sweaters]
+  );
+
   return (
     <Container>
       <CatalogStyled>
