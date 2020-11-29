@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getAllSweaters } from "../../api/api";
+import { useGlobalContext } from "../../context/globalState";
+import { INIT_SWEATERS } from "../../context/actions";
 import MainSlider from "../slider/MainSlider.js";
 import LoadMoreButtonStyled from "../styles/LoadMoreButton.styled.js";
 import ProductOverviewPanelStyled from "../styles/ProductOverviewPanel.styled.js";
@@ -7,11 +10,18 @@ import CardsStyled from "../styles/Cards.styled.js";
 import Container from "../styles/Container.js";
 import Button from "@material-ui/core/Button";
 import SweaterDescriptionCard from "../SweaterDescriptionCard.js";
-import { sweaters } from "../Sweaters.js";
 import { fontSize } from "../constants/Constants.js";
 
-function Home(props) {
+function Home() {
   const [elementsToShow, setElementsToShow] = useState(3);
+  const { dispatch, sweaters } = useGlobalContext();
+  useEffect(() => {
+    const data = getAllSweaters();
+    dispatch({
+      type: INIT_SWEATERS,
+      payload: data,
+    });
+  }, [dispatch]);
   const button = {
     roundedButton: {
       borderRadius: fontSize.fs24,
