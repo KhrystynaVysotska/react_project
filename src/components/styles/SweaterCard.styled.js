@@ -22,7 +22,8 @@ const SweaterCardStyled = styled.nav`
       font-weight: lighter;
     }
   }
-  .size {
+  .size,
+  .country {
     p {
       margin: 5px 0;
     }
