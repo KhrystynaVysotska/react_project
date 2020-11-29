@@ -4,7 +4,7 @@ import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 
-function SearchField({ handleChange }) {
+function SearchField({ handleChange, handleBlur }) {
   const submitHandler = (e) => {
     e.preventDefault();
   };
@@ -13,7 +13,11 @@ function SearchField({ handleChange }) {
       <IconButton>
         <SearchIcon />
       </IconButton>
-      <InputBase placeholder="Enter brand" onChange={handleChange} />
+      <InputBase
+        placeholder="Enter brand"
+        onChange={handleChange}
+        onBlur={handleBlur}
+      />
     </Paper>
   );
 }

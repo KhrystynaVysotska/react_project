@@ -34,6 +34,9 @@ function Catalog() {
     );
   };
 
+  const handleBlur = () => {
+    setSearchOpened(false);
+  };
   return (
     <Container>
       <CatalogStyled>
@@ -74,7 +77,12 @@ function Catalog() {
                   Search
                 </Button>
               )}
-              {searchOpened && <SearchField handleChange={handleChange} />}
+              {searchOpened && (
+                <SearchField
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                />
+              )}
             </div>
           </div>
         </ProductOverviewPanelStyled>
