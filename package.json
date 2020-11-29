@@ -17,6 +17,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "react-slick": "^0.27.13",
+    "react-transition-group": "^4.4.1",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.2.1",
     "web-vitals": "^0.2.4"
@@ -44,5 +45,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-alice-carousel": "^2.1.0"
   }
 }
