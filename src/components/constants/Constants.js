@@ -50,3 +50,25 @@ export const colors = {
   facebook: "#007AB9",
   card: "#dcdce35e",
 };
+
+export const seasons = [
+  { id: 0, selected: false, season: "winter" },
+  { id: 1, selected: false, season: "spring" },
+  { id: 2, selected: false, season: "summer" },
+  { id: 3, selected: false, season: "autumn" },
+];
+
+export const gender = [
+  { id: 0, selected: false, gender: "girl" },
+  { id: 1, selected: false, gender: "boy" },
+  { id: 2, selected: false, gender: "unisex" },
+];
+
+export const material = [
+  { id: 0, selected: false, material: "modal" },
+  { id: 1, selected: false, material: "cotton" },
+  { id: 2, selected: false, material: "spandex" },
+  { id: 3, selected: false, material: "tencel" },
+  { id: 4, selected: false, material: "rayon" },
+  { id: 5, selected: false, material: "knitwear" },
+];
