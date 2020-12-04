@@ -89,7 +89,7 @@ function Catalog() {
     if (!material.includes(tag)) {
       material.push(tag);
     } else {
-      material.pop(tag);
+      material = material.filter((element) => element !== tag);
     }
     setCollectedTruKeys({
       gender: collectedTrueKeys.gender,
@@ -109,7 +109,7 @@ function Catalog() {
     if (!gender.includes(tag)) {
       gender.push(tag);
     } else {
-      gender.pop(tag);
+      gender = gender.filter((element) => element !== tag);
     }
     setCollectedTruKeys({
       gender: gender,
@@ -129,7 +129,7 @@ function Catalog() {
     if (!season.includes(tag)) {
       season.push(tag);
     } else {
-      season.pop(tag);
+      season = season.filter((element) => element !== tag);
     }
     setCollectedTruKeys({
       gender: collectedTrueKeys.gender,
