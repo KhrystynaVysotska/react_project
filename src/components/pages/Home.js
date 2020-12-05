@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { getAllSweaters } from "../../api/api";
-import { useGlobalContext } from "../../context/globalState";
-import { INIT_SWEATERS } from "../../context/actions";
+import { useSelector, useDispatch } from "react-redux";
+import { createSelector } from "reselect";
+import { getSweaters } from "../../context/actionCreators";
 import MainSlider from "../slider/MainSlider.js";
 import LoadMoreButtonStyled from "../styles/LoadMoreButton.styled.js";
 import ProductOverviewPanelStyled from "../styles/ProductOverviewPanel.styled.js";
@@ -14,14 +14,13 @@ import { fontSize } from "../constants/Constants.js";
 
 function Home() {
   const [elementsToShow, setElementsToShow] = useState(3);
-  const { dispatch, sweaters } = useGlobalContext();
+  const dispatch = useDispatch();
+  const sweaters = useSelector((state) => state.sweaters.sweaters);
+
   useEffect(() => {
-    const data = getAllSweaters();
-    dispatch({
-      type: INIT_SWEATERS,
-      payload: data,
-    });
+    dispatch(getSweaters());
   }, [dispatch]);
+
   const button = {
     roundedButton: {
       borderRadius: fontSize.fs24,
@@ -30,7 +29,7 @@ function Home() {
     },
   };
   const handleLoadMore = () => {
-    const elemToScrollTo = document.getElementById(0);
+    const elemToScrollTo = document.getElementById(sweaters[0].sweaterId);
     elemToScrollTo.scrollIntoView({
       behavior: "smooth",
       block: "center",
@@ -66,7 +65,7 @@ function Home() {
         <CardsStyled>
           {sweaters.slice(0, elementsToShow).map((sweater, index) => {
             return (
-              <div id={sweater.id} key={sweater.id}>
+              <div id={sweater.sweaterId} key={`card-${sweater.sweaterId}`}>
                 <SweaterDescriptionCard sweater={sweater} />
               </div>
             );

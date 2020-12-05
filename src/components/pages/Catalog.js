@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { getAllSweaters } from "../../api/api";
-import { useGlobalContext } from "../../context/globalState";
-import { INIT_SWEATERS } from "../../context/actions";
+import { useSelector, useDispatch } from "react-redux";
+import { createSelector } from "reselect";
 import CardsStyled from "../styles/Cards.styled.js";
 import CatalogStyled from "../styles/Catalog.styled.js";
 import Container from "../styles/Container.js";
@@ -14,12 +13,14 @@ import Button from "@material-ui/core/Button";
 import SearchField from "../SearchField.js";
 import Chip from "@material-ui/core/Chip";
 import { seasons, gender, material } from "../constants/Constants";
+import { getSweaters } from "../../context/actionCreators";
 
 function Catalog() {
-  const { dispatch, sweaters } = useGlobalContext();
+  const dispatch = useDispatch();
+  const sweaters = useSelector((state) => state.sweaters.sweaters);
   const [searchOpened, setSearchOpened] = useState(false);
   const [filterOpened, setFilterOpened] = useState(false);
-  const [foundedSweaters, setFoundedSweaters] = useState([]);
+  const [foundedSweaters, setFoundedSweaters] = useState(sweaters);
   const [seasonTags, setSeasons] = useState(seasons);
   const [genderTags, setGenders] = useState(gender);
   const [materialTags, setMaterials] = useState(material);
@@ -30,12 +31,7 @@ function Catalog() {
   });
 
   useEffect(() => {
-    const data = getAllSweaters();
-    setFoundedSweaters(data);
-    dispatch({
-      type: INIT_SWEATERS,
-      payload: data,
-    });
+    dispatch(getSweaters());
   }, [dispatch]);
 
   useEffect(() => {
@@ -232,7 +228,10 @@ function Catalog() {
         <CardsStyled>
           {foundedSweaters.map((sweater, index) => {
             return (
-              <div id={sweater.id} key={sweater.id}>
+              <div
+                id={sweater.sweaterId}
+                key={`detailed-card-${sweater.sweaterId}`}
+              >
                 <SweaterCard sweater={sweater} />
               </div>
             );

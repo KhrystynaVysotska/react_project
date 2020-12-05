@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { useGlobalContext } from "../../context/globalState";
+import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
 import ItemStyled from "../styles/Item.styled";
 import ModalStyled from "../styles/Modal.styled";
 import CustomizedCloseIcon from "../styles/CustomizedCloseIcon";
@@ -15,11 +16,16 @@ import CriteriaSelectStyled from "../styles/CriteriaSelect.styled.js";
 import Button from "@material-ui/core/Button";
 import { fontSize } from "../constants/Constants";
 
+const findSweater = createSelector(
+  (state) => state.sweaters.sweaters,
+  (sweaters) =>
+    sweaters.filter((sweater) => sweater.sweaterId == useParams().id)[0]
+);
+
 function Item() {
+  const sweater = useSelector(findSweater);
   let history = useHistory();
-  let { id } = useParams();
-  const { sweaters } = useGlobalContext();
-  const sweater = sweaters[id];
+
   const [size, setSize] = React.useState("");
   const [color, setColor] = React.useState("");
 
@@ -35,8 +41,6 @@ function Item() {
     e.stopPropagation();
     history.goBack();
   };
-
-  if (!sweater) return <div>Sweater not found</div>;
 
   const settings = {
     customPaging: function (i) {
@@ -79,7 +83,7 @@ function Item() {
         </ItemPreviewStyled>
         <InfoStyled>
           <ChipStyled
-            label={sweater.season}
+            label={sweater.season.toLowerCase()}
             variant="outlined"
             avatar={<Avatar>S</Avatar>}
           />
@@ -88,8 +92,8 @@ function Item() {
             variant="outlined"
             avatar={<Avatar>M</Avatar>}
           />
-          <h1>{sweater.brand}</h1>
-          <h3>${sweater.price}</h3>
+          <h1>{sweater.brandName}</h1>
+          <h3>${sweater.priceInUah}</h3>
           <p>
             Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula.
             Mauris consequat ornare feugiat.

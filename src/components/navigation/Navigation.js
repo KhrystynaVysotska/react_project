@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
 import { NavLink } from "react-router-dom";
 import Badge from "@material-ui/core/Badge";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
@@ -6,10 +8,19 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import NavigationStyled from "../styles/Navigation.styled.js";
 import IconStyled from "../styles/Icon.styled.js";
 import MenuStyled from "../styles/Menu.styled.js";
-import { useGlobalContext } from "../../context/globalState";
 
 function Navigation() {
-  const { favorites } = useGlobalContext();
+  const selectedFavoriteSweaters = useSelector(
+    (state) => state.favorites.favorites
+  );
+  const [numberOfFavoriteSweaters, setNumberOfFavoriteSweaters] = useState(
+    selectedFavoriteSweaters.length
+  );
+
+  useEffect(() => {
+    setNumberOfFavoriteSweaters(selectedFavoriteSweaters.length);
+  }, [selectedFavoriteSweaters]);
+
   const [scrolled, setScrolled] = useState(false);
 
   const changeBackground = useCallback(() => {
@@ -62,7 +73,7 @@ function Navigation() {
         <Badge
           color="primary"
           overlap="circle"
-          badgeContent={favorites.length}
+          badgeContent={numberOfFavoriteSweaters}
           showZero
         >
           <FavoriteBorderIcon />

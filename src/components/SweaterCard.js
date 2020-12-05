@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { createSelector } from "reselect";
+import { addFavorite, removeFavorite } from "../context/actionCreators";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -9,42 +12,52 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import SweaterCardStyled from "./styles/SweaterCard.styled";
 import Button from "@material-ui/core/Button";
-import { useGlobalContext } from "../context/globalState";
-import { ADD_FAVORITE, REMOVE_FAVORITE } from "../context/actions";
+import sweaterImage from "../images/sweater1.jpg";
 
 function SweaterCard({ sweater }) {
-  const { dispatch, favorites } = useGlobalContext();
+  const dispatch = useDispatch();
+  const selectedFavorites = useSelector((state) => state.favorites);
+  console.log(selectedFavorites);
+  const [favorites, setFavorites] = useState(selectedFavorites.favorites);
   let history = useHistory();
   let location = useLocation();
-  const toggleFavorite = (sweater, action) => {
-    dispatch({
-      type: action,
-      payload: sweater,
-    });
-  };
+
+  useEffect(() => {
+    setFavorites(selectedFavorites.favorites);
+  }, [selectedFavorites]);
+
+  const handleAddFavorite = useCallback((id) => dispatch(addFavorite(id)), [
+    dispatch,
+  ]);
+  const handleRemoveFavorite = useCallback(
+    (id) => dispatch(removeFavorite(id)),
+    [dispatch]
+  );
+
   return (
     <SweaterCardStyled>
       <Card className="card">
         <CardActionArea>
-          <CardMedia className="media" image={sweater.image} title="Sweater" />
+          <CardMedia className="media" image={sweaterImage} title="Sweater" />
           <CardContent>
             <div className="card_content">
               <div className="brand">
-                <h1>{sweater.brand}</h1>
-                {favorites.includes(sweater) ? (
+                <h1>{sweater.brandName}</h1>
+                {favorites.includes(sweater.sweaterId) ? (
                   <FavoriteIcon
                     color="primary"
-                    onClick={() => toggleFavorite(sweater, REMOVE_FAVORITE)}
+                    onClick={() => handleRemoveFavorite(sweater.sweaterId)}
                   />
                 ) : (
                   <FavoriteBorderIcon
-                    onClick={() => toggleFavorite(sweater, ADD_FAVORITE)}
+                    onClick={() => handleAddFavorite(sweater.sweaterId)}
                   />
                 )}
               </div>
               <div className="country">
                 <p>
-                  Country:<span className="value">{sweater.country}</span>
+                  Country:
+                  <span className="value">{sweater.countryOfManufacture}</span>
                 </p>
               </div>
               <div className="size">
@@ -54,7 +67,7 @@ function SweaterCard({ sweater }) {
               </div>
               <div className="price">
                 <p>
-                  Price:<span className="value">${sweater.price}</span>
+                  Price:<span className="value">${sweater.priceInUah}</span>
                 </p>
               </div>
             </div>
@@ -62,11 +75,11 @@ function SweaterCard({ sweater }) {
         </CardActionArea>
         <CardActions className="view_button">
           <Button
-            id={"view-button-" + sweater.id}
+            id={`view-button-${sweater.sweaterId}`}
             color="primary"
             onClick={() =>
               history.push({
-                pathname: `/item/${sweater.id}`,
+                pathname: `/item/${sweater.sweaterId}`,
                 state: {
                   background: location,
                 },
