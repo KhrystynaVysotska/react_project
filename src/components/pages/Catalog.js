@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import CardsStyled from "../styles/Cards.styled.js";
 import CatalogStyled from "../styles/Catalog.styled.js";
 import Container from "../styles/Container.js";
+import CircularProgressStyled from "../styles/CircularProgress.styled.js";
 import SweaterCard from "../SweaterCard.js";
 import ProductOverviewPanelStyled from "../styles/ProductOverviewPanel.styled.js";
 import MenuStyled from "../styles/Menu.styled.js";
@@ -14,11 +15,14 @@ import Chip from "@material-ui/core/Chip";
 import { seasons, gender, material } from "../constants/Constants";
 import { getSweaters, applyFilter } from "../../context/actionCreators";
 import { useHistory } from "react-router-dom";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 function Catalog() {
   const dispatch = useDispatch();
   const selectedSweaters = useSelector((state) => state.sweaters.sweaters);
+  const isLoading = useSelector((state) => state.sweaters.isLoading);
   const history = useHistory();
+  const [isLoaded, setIsLoaded] = useState(isLoading);
   const [sweaters, setSweaters] = useState(selectedSweaters);
   const [searchOpened, setSearchOpened] = useState(false);
   const [filterOpened, setFilterOpened] = useState(false);
@@ -29,6 +33,10 @@ function Catalog() {
   useEffect(() => {
     dispatch(getSweaters());
   }, [dispatch]);
+
+  useEffect(() => {
+    setIsLoaded(isLoading);
+  }, [isLoading]);
 
   useEffect(() => {
     setSweaters(selectedSweaters);
@@ -200,19 +208,27 @@ function Catalog() {
             })}
           </div>
         )}
-        <CardsStyled>
-          {sweaters.map((sweater, index) => {
-            return (
-              <div
-                id={sweater.sweaterId}
-                key={`detailed-card-${sweater.sweaterId}`}
-              >
-                <SweaterCard sweater={sweater} />
-              </div>
-            );
-          })}
-        </CardsStyled>
+        {isLoaded && (
+          <CircularProgressStyled>
+            <CircularProgress size={70} thickness={3} />
+          </CircularProgressStyled>
+        )}
+        {!isLoaded && (
+          <CardsStyled>
+            {sweaters.map((sweater, index) => {
+              return (
+                <div
+                  id={sweater.sweaterId}
+                  key={`detailed-card-${sweater.sweaterId}`}
+                >
+                  <SweaterCard sweater={sweater} />
+                </div>
+              );
+            })}
+          </CardsStyled>
+        )}
       </CatalogStyled>
+      )
     </Container>
   );
 }

@@ -1,25 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { createSelector } from "reselect";
 import { getSweaters } from "../../context/actionCreators";
 import MainSlider from "../slider/MainSlider.js";
 import LoadMoreButtonStyled from "../styles/LoadMoreButton.styled.js";
 import ProductOverviewPanelStyled from "../styles/ProductOverviewPanel.styled.js";
+import CircularProgressStyled from "../styles/CircularProgress.styled.js";
 import MenuStyled from "../styles/Menu.styled.js";
 import CardsStyled from "../styles/Cards.styled.js";
 import Container from "../styles/Container.js";
 import Button from "@material-ui/core/Button";
 import SweaterDescriptionCard from "../SweaterDescriptionCard.js";
 import { fontSize } from "../constants/Constants.js";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 function Home() {
   const [elementsToShow, setElementsToShow] = useState(3);
   const dispatch = useDispatch();
   const sweaters = useSelector((state) => state.sweaters.sweaters);
+  const isLoading = useSelector((state) => state.sweaters.isLoading);
+  const [isLoaded, setIsLoaded] = useState(isLoading);
 
   useEffect(() => {
     dispatch(getSweaters());
   }, [dispatch]);
+
+  useEffect(() => {
+    setIsLoaded(isLoading);
+  }, [isLoading]);
 
   const button = {
     roundedButton: {
@@ -62,27 +69,37 @@ function Home() {
             </MenuStyled>
           </div>
         </ProductOverviewPanelStyled>
-        <CardsStyled>
-          {sweaters.slice(0, elementsToShow).map((sweater, index) => {
-            return (
-              <div id={sweater.sweaterId} key={`card-${sweater.sweaterId}`}>
-                <SweaterDescriptionCard sweater={sweater} />
-              </div>
-            );
-          })}
-        </CardsStyled>
-        <LoadMoreButtonStyled>
-          <Button
-            size="large"
-            variant="contained"
-            color="primary"
-            style={button.roundedButton}
-            onClick={() => handleLoadMore()}
-          >
-            {elementsToShow === 3 ? "Load More" : "Show Less"}
-          </Button>
-        </LoadMoreButtonStyled>
+        {isLoaded && (
+          <CircularProgressStyled>
+            <CircularProgress size={70} thickness={3} />
+          </CircularProgressStyled>
+        )}
+        {!isLoaded && (
+          <>
+            <CardsStyled>
+              {sweaters.slice(0, elementsToShow).map((sweater, index) => {
+                return (
+                  <div id={sweater.sweaterId} key={`card-${sweater.sweaterId}`}>
+                    <SweaterDescriptionCard sweater={sweater} />
+                  </div>
+                );
+              })}
+            </CardsStyled>
+            <LoadMoreButtonStyled>
+              <Button
+                size="large"
+                variant="contained"
+                color="primary"
+                style={button.roundedButton}
+                onClick={() => handleLoadMore()}
+              >
+                {elementsToShow === 3 ? "Load More" : "Show Less"}
+              </Button>
+            </LoadMoreButtonStyled>
+          </>
+        )}
       </Container>
+      )
     </>
   );
 }

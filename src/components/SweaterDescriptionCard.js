@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { createSelector } from "reselect";
 import { addFavorite, removeFavorite } from "../context/actionCreators";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";

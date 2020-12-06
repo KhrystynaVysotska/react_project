@@ -11,7 +11,9 @@ export const getSweaters = () => (dispatch) => {
   dispatch(loadingSweaters());
   getAllSweaters()
     .then((res) => {
-      dispatch(getSweatersSuccess(res.data));
+      setTimeout(() => {
+        dispatch(getSweatersSuccess(res.data));
+      }, 500);
     })
     .catch((err) => {
       dispatch(failedSweaters(err.message));
@@ -22,7 +24,9 @@ export const applyFilter = (params) => (dispatch) => {
   dispatch(loadingSweaters());
   getFilteredSweaters(params)
     .then((res) => {
-      dispatch(getSweatersSuccess(res.data));
+      setTimeout(() => {
+        dispatch(getSweatersSuccess(res.data));
+      }, 500);
     })
     .catch((err) => {
       dispatch(failedSweaters(err.message));
