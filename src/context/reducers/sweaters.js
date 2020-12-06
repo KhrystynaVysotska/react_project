@@ -1,5 +1,6 @@
 import {
   INIT_SWEATERS,
+  GET_SWEATER_BY_ID,
   LOADING_SWEATERS,
   FAILED_SWEATERS,
 } from "../actionTypes";

@@ -1,7 +1,6 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { createSelector } from "reselect";
 import { addFavorite, removeFavorite } from "../context/actionCreators";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -17,7 +16,6 @@ import sweaterImage from "../images/sweater1.jpg";
 function SweaterCard({ sweater }) {
   const dispatch = useDispatch();
   const selectedFavorites = useSelector((state) => state.favorites);
-  console.log(selectedFavorites);
   const [favorites, setFavorites] = useState(selectedFavorites.favorites);
   let history = useHistory();
   let location = useLocation();

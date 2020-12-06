@@ -5,3 +5,4 @@ const Axios = axios.create({
 });
 
 export const getAllSweaters = () => Axios.get();
+export const getFilteredSweaters = (params) => Axios.get(`/?${params}`);

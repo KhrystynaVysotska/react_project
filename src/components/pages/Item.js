@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { createSelector } from "reselect";
 import ItemStyled from "../styles/Item.styled";
 import ModalStyled from "../styles/Modal.styled";
 import CustomizedCloseIcon from "../styles/CustomizedCloseIcon";
@@ -16,18 +15,19 @@ import CriteriaSelectStyled from "../styles/CriteriaSelect.styled.js";
 import Button from "@material-ui/core/Button";
 import { fontSize } from "../constants/Constants";
 
-const findSweater = createSelector(
-  (state) => state.sweaters.sweaters,
-  (sweaters) =>
-    sweaters.filter((sweater) => sweater.sweaterId == useParams().id)[0]
-);
-
 function Item() {
-  const sweater = useSelector(findSweater);
+  const selectedSweater = useSelector((state) => state.sweaters.sweaters);
+  const { id } = useParams();
   let history = useHistory();
+  const [sweater, setSweater] = useState(
+    selectedSweater.filter((sweater) => sweater.sweaterId == id)[0]
+  );
+  const [size, setSize] = useState("");
+  const [color, setColor] = useState("");
 
-  const [size, setSize] = React.useState("");
-  const [color, setColor] = React.useState("");
+  useEffect(() => {
+    setSweater(selectedSweater.filter((sweater) => sweater.sweaterId == id)[0]);
+  }, [selectedSweater, id]);
 
   const handleSizeChange = (event) => {
     setSize(event.target.value);

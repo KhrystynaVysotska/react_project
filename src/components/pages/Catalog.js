@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { createSelector } from "reselect";
 import CardsStyled from "../styles/Cards.styled.js";
 import CatalogStyled from "../styles/Catalog.styled.js";
 import Container from "../styles/Container.js";
@@ -13,126 +12,104 @@ import Button from "@material-ui/core/Button";
 import SearchField from "../SearchField.js";
 import Chip from "@material-ui/core/Chip";
 import { seasons, gender, material } from "../constants/Constants";
-import { getSweaters } from "../../context/actionCreators";
+import { getSweaters, applyFilter } from "../../context/actionCreators";
+import { useHistory } from "react-router-dom";
 
 function Catalog() {
   const dispatch = useDispatch();
-  const sweaters = useSelector((state) => state.sweaters.sweaters);
+  const selectedSweaters = useSelector((state) => state.sweaters.sweaters);
+  const history = useHistory();
+  const [sweaters, setSweaters] = useState(selectedSweaters);
   const [searchOpened, setSearchOpened] = useState(false);
   const [filterOpened, setFilterOpened] = useState(false);
-  const [foundedSweaters, setFoundedSweaters] = useState(sweaters);
   const [seasonTags, setSeasons] = useState(seasons);
   const [genderTags, setGenders] = useState(gender);
   const [materialTags, setMaterials] = useState(material);
-  const [collectedTrueKeys, setCollectedTruKeys] = useState({
-    gender: [],
-    material: [],
-    season: [],
-  });
 
   useEffect(() => {
     dispatch(getSweaters());
   }, [dispatch]);
 
   useEffect(() => {
-    const filterKeys = Object.keys(collectedTrueKeys);
-    let array = sweaters.filter((sweater) =>
-      filterKeys.every((key) => {
-        if (collectedTrueKeys[key].length === 0) return true;
-        return collectedTrueKeys[key].includes(sweater[key]);
-      })
+    setSweaters(selectedSweaters);
+  }, [selectedSweaters]);
+
+  const handleFiltered = useCallback(
+    (key, value) => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has(key)) {
+        let values = params.getAll(key);
+        if (values.includes(value)) {
+          values = values.filter((paramValue) => paramValue !== value);
+          params.delete(key);
+          values.forEach((value) => {
+            params.append(key, value);
+          });
+        } else {
+          params.append(key, value);
+        }
+      } else {
+        params.append(key, value);
+      }
+      history.push(`?${params}`);
+      dispatch(applyFilter(params.toString()));
+    },
+    [dispatch, history]
+  );
+
+  const handleSeasonFilter = ({ season, id }) => {
+    handleFiltered("season", season);
+    const tags = seasonTags.map((tag) =>
+      tag.id === id ? { id: id, selected: !tag.selected, season: season } : tag
     );
-    setFoundedSweaters(array);
-  }, [collectedTrueKeys, sweaters]);
+    setSeasons(tags);
+  };
+
+  const handleMaterialFilter = ({ material, id }) => {
+    handleFiltered("material", material);
+    const tags = materialTags.map((tag) =>
+      tag.id === id
+        ? { id: id, selected: !tag.selected, material: material }
+        : tag
+    );
+    setMaterials(tags);
+  };
+
+  const handleGenderFilter = ({ gender, id }) => {
+    handleFiltered("gender", gender);
+    const tags = genderTags.map((tag) =>
+      tag.id === id ? { id: id, selected: !tag.selected, gender: gender } : tag
+    );
+    setGenders(tags);
+  };
 
   const handleChange = useCallback(
     (event) => {
       let brand = event.target.value;
-      setFoundedSweaters(
-        sweaters.filter((sweater) => sweater.brand.includes(brand))
-      );
+      // setFoundedSweaters(
+      //   sweaters.filter((sweater) => sweater.brand.includes(brand))
+      // );
     },
     [sweaters]
   );
 
-  const handleBlur = useCallback(
-    (event) => {
-      if (event.target.value.length === 0) {
-        setSearchOpened(false);
-      } else if (event.target.value.match("[\\s]+")) {
-        setSearchOpened(false);
-        setFoundedSweaters(sweaters);
-      }
-    },
-    [sweaters]
-  );
+  const handleBlur = useCallback((event) => {
+    if (event.target.value.length === 0) {
+      setSearchOpened(false);
+    } else if (event.target.value.match("[\\s]+")) {
+      setSearchOpened(false);
+      dispatch(getSweaters());
+    }
+  });
 
   const toggleFilterOpened = () => {
     if (filterOpened) {
-      setFoundedSweaters(sweaters);
+      dispatch(getSweaters());
+      history.replace("/catalog");
     }
     setFilterOpened(!filterOpened);
   };
 
-  const handleMaterialFilter = (id, tag) => {
-    let array = materialTags.map((material) =>
-      material.id === id
-        ? { id: id, selected: !material.selected, material: tag }
-        : material
-    );
-    setMaterials(array);
-    let material = collectedTrueKeys.material.slice();
-    if (!material.includes(tag)) {
-      material.push(tag);
-    } else {
-      material = material.filter((element) => element !== tag);
-    }
-    setCollectedTruKeys({
-      gender: collectedTrueKeys.gender,
-      material: material,
-      season: collectedTrueKeys.season,
-    });
-  };
-
-  const handleGenderFilter = (id, tag) => {
-    let array = genderTags.map((gender) =>
-      gender.id === id
-        ? { id: id, selected: !gender.selected, gender: tag }
-        : gender
-    );
-    setGenders(array);
-    let gender = collectedTrueKeys.gender.slice();
-    if (!gender.includes(tag)) {
-      gender.push(tag);
-    } else {
-      gender = gender.filter((element) => element !== tag);
-    }
-    setCollectedTruKeys({
-      gender: gender,
-      material: collectedTrueKeys.material,
-      season: collectedTrueKeys.season,
-    });
-  };
-
-  const handleSeasonFilter = (id, tag) => {
-    let array = seasonTags.map((season) =>
-      season.id === id
-        ? { id: id, selected: !season.selected, season: tag }
-        : season
-    );
-    setSeasons(array);
-    let season = collectedTrueKeys.season.slice();
-    if (!season.includes(tag)) {
-      season.push(tag);
-    } else {
-      season = season.filter((element) => element !== tag);
-    }
-    setCollectedTruKeys({
-      gender: collectedTrueKeys.gender,
-      material: collectedTrueKeys.material,
-      season: season,
-    });
-  };
   return (
     <Container>
       <CatalogStyled>
@@ -193,7 +170,7 @@ function Catalog() {
                   variant={season.selected ? "default" : "outlined"}
                   color={season.selected ? "primary" : "default"}
                   label={season.season}
-                  onClick={() => handleSeasonFilter(season.id, season.season)}
+                  onClick={() => handleSeasonFilter(season)}
                 />
               );
             })}
@@ -205,7 +182,7 @@ function Catalog() {
                   variant={gender.selected ? "default" : "outlined"}
                   color={gender.selected ? "primary" : "default"}
                   label={gender.gender}
-                  onClick={() => handleGenderFilter(gender.id, gender.gender)}
+                  onClick={() => handleGenderFilter(gender)}
                 />
               );
             })}
@@ -217,16 +194,14 @@ function Catalog() {
                   variant={material.selected ? "default" : "outlined"}
                   color={material.selected ? "primary" : "default"}
                   label={material.material}
-                  onClick={() =>
-                    handleMaterialFilter(material.id, material.material)
-                  }
+                  onClick={() => handleMaterialFilter(material)}
                 />
               );
             })}
           </div>
         )}
         <CardsStyled>
-          {foundedSweaters.map((sweater, index) => {
+          {sweaters.map((sweater, index) => {
             return (
               <div
                 id={sweater.sweaterId}

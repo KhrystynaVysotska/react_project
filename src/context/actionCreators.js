@@ -5,11 +5,22 @@ import {
   LOADING_SWEATERS,
   FAILED_SWEATERS,
 } from "./actionTypes";
-import { getAllSweaters } from "../api/api";
+import { getAllSweaters, getFilteredSweaters } from "../api/api";
 
 export const getSweaters = () => (dispatch) => {
   dispatch(loadingSweaters());
   getAllSweaters()
+    .then((res) => {
+      dispatch(getSweatersSuccess(res.data));
+    })
+    .catch((err) => {
+      dispatch(failedSweaters(err.message));
+    });
+};
+
+export const applyFilter = (params) => (dispatch) => {
+  dispatch(loadingSweaters());
+  getFilteredSweaters(params)
     .then((res) => {
       dispatch(getSweatersSuccess(res.data));
     })
@@ -29,9 +40,7 @@ const loadingSweaters = () => ({
 
 const failedSweaters = (error) => ({
   type: FAILED_SWEATERS,
-  payload: {
-    error,
-  },
+  payload: error,
 });
 
 export const addFavorite = (sweaterId) => (dispatch) => {
