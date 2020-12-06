@@ -83,29 +83,29 @@ function Catalog() {
     setGenders(tags);
   };
 
-  const handleChange = useCallback(
-    (event) => {
-      let brand = event.target.value;
-      // setFoundedSweaters(
-      //   sweaters.filter((sweater) => sweater.brand.includes(brand))
-      // );
-    },
-    [sweaters]
-  );
+  const handleChange = (event) => {
+    let brand = event.target.value;
+    setSweaters(
+      selectedSweaters.filter((sweater) => sweater.brandName.includes(brand))
+    );
+  };
 
-  const handleBlur = useCallback((event) => {
+  const handleBlur = (event) => {
     if (event.target.value.length === 0) {
       setSearchOpened(false);
     } else if (event.target.value.match("[\\s]+")) {
       setSearchOpened(false);
       dispatch(getSweaters());
     }
-  });
+  };
 
   const toggleFilterOpened = () => {
     if (filterOpened) {
       dispatch(getSweaters());
       history.replace("/catalog");
+      setSeasons(seasons);
+      setMaterials(material);
+      setGenders(gender);
     }
     setFilterOpened(!filterOpened);
   };
