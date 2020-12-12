@@ -1,6 +1,8 @@
 import {
   ADD_FAVORITE,
   REMOVE_FAVORITE,
+  ADD_SELECTED,
+  REMOVE_SELECTED,
   INIT_SWEATERS,
   LOADING_SWEATERS,
   FAILED_SWEATERS,
@@ -62,5 +64,23 @@ export const removeFavorite = (sweaterId) => (dispatch) => {
 
 const removeMarkFavorite = (sweaterId) => ({
   type: REMOVE_FAVORITE,
+  payload: sweaterId,
+});
+
+export const addToCart = (sweaterId) => (dispatch) => {
+  dispatch(addSelected(sweaterId));
+};
+
+const addSelected = (sweaterId) => ({
+  type: ADD_SELECTED,
+  payload: sweaterId,
+});
+
+export const removeFromCart = (sweaterId) => (dispatch) => {
+  dispatch(removeSelected(sweaterId));
+};
+
+const removeSelected = (sweaterId) => ({
+  type: REMOVE_SELECTED,
   payload: sweaterId,
 });

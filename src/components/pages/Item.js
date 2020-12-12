@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ItemStyled from "../styles/Item.styled";
 import ModalStyled from "../styles/Modal.styled";
 import CustomizedCloseIcon from "../styles/CustomizedCloseIcon";
@@ -14,20 +14,30 @@ import CriteriaSelect from "../pages/CriteriaSelect";
 import CriteriaSelectStyled from "../styles/CriteriaSelect.styled.js";
 import Button from "@material-ui/core/Button";
 import { fontSize } from "../constants/Constants";
+import { addToCart, removeFromCart } from "../../context/actionCreators";
 
 function Item() {
-  const selectedSweater = useSelector((state) => state.sweaters.sweaters);
+  const dispatch = useDispatch();
+
   const { id } = useParams();
   let history = useHistory();
+
+  const sweaters = useSelector((state) => state.sweaters.sweaters);
   const [sweater, setSweater] = useState(
-    selectedSweater.filter((sweater) => sweater.sweaterId == id)[0]
+    sweaters.filter((sweater) => sweater.sweaterId == id)[0]
   );
+  useEffect(() => {
+    setSweater(sweaters.filter((sweater) => sweater.sweaterId == id)[0]);
+  }, [sweaters, id]);
+
+  const sweatersInCart = useSelector((state) => state.selected.selected);
+  const [addedToCart, setAddedToCart] = useState(sweatersInCart);
+  useEffect(() => {
+    setAddedToCart(sweatersInCart);
+  }, [sweatersInCart]);
+
   const [size, setSize] = useState("");
   const [color, setColor] = useState("");
-
-  useEffect(() => {
-    setSweater(selectedSweater.filter((sweater) => sweater.sweaterId == id)[0]);
-  }, [selectedSweater, id]);
 
   const handleSizeChange = (event) => {
     setSize(event.target.value);
@@ -37,6 +47,15 @@ function Item() {
     setColor(event.target.value);
   };
 
+  const handleToggleCart = useCallback(
+    (id) => {
+      addedToCart.includes(id)
+        ? dispatch(removeFromCart(id))
+        : dispatch(addToCart(id));
+    },
+    [dispatch, addedToCart]
+  );
+
   let back = (e) => {
     e.stopPropagation();
     history.goBack();
@@ -45,9 +64,9 @@ function Item() {
   const settings = {
     customPaging: function (i) {
       return (
-        <a>
-          <img src={itemPreview[i].url} />
-        </a>
+        <div>
+          <img src={itemPreview[i].url} alt="slide" />
+        </div>
       );
     },
     dots: true,
@@ -125,12 +144,14 @@ function Item() {
             />
           </CriteriaSelectStyled>
           <Button
+            id={id}
             size="large"
             variant="contained"
             color="primary"
             style={button.roundedButton}
+            onClick={() => handleToggleCart(id)}
           >
-            Add to cart
+            {addedToCart.includes(id) ? "Remove from cart" : "Add to card"}
           </Button>
         </InfoStyled>
       </ModalStyled>
