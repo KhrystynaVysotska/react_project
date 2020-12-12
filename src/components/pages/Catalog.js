@@ -60,7 +60,7 @@ function Catalog() {
         params.append(key, value);
       }
       history.push(`?${params}`);
-      dispatch(applyFilter(params.toString()));
+      dispatch(applyFilter(params));
     },
     [dispatch, history]
   );
