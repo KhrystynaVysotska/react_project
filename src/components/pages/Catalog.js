@@ -228,7 +228,6 @@ function Catalog() {
           </CardsStyled>
         )}
       </CatalogStyled>
-      )
     </Container>
   );
 }
