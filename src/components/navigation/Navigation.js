@@ -12,13 +12,23 @@ function Navigation() {
   const selectedFavoriteSweaters = useSelector(
     (state) => state.favorites.favorites
   );
+  const addedToCartSweaters = useSelector((state) => state.selected.selected);
+
   const [numberOfFavoriteSweaters, setNumberOfFavoriteSweaters] = useState(
     selectedFavoriteSweaters.length
+  );
+
+  const [numberOfSweatersInCart, setNumberOfSweaterInCart] = useState(
+    addedToCartSweaters.length
   );
 
   useEffect(() => {
     setNumberOfFavoriteSweaters(selectedFavoriteSweaters.length);
   }, [selectedFavoriteSweaters]);
+
+  useEffect(() => {
+    setNumberOfSweaterInCart(addedToCartSweaters.length);
+  }, [addedToCartSweaters]);
 
   const [scrolled, setScrolled] = useState(false);
 
@@ -66,7 +76,12 @@ function Navigation() {
       </MenuStyled>
 
       <IconStyled>
-        <Badge color="primary" overlap="circle" badgeContent={0} showZero>
+        <Badge
+          color="primary"
+          overlap="circle"
+          badgeContent={numberOfSweatersInCart}
+          showZero
+        >
           <ShoppingCartIcon />
         </Badge>
         <Badge
