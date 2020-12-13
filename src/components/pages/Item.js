@@ -12,6 +12,7 @@ import { itemPreview } from "../constants/Constants";
 import Avatar from "@material-ui/core/Avatar";
 import CriteriaSelect from "../pages/CriteriaSelect";
 import CriteriaSelectStyled from "../styles/CriteriaSelect.styled.js";
+import ButtonGroupStyled from "../styles/CustomButtonGroup.styled.js";
 import Button from "@material-ui/core/Button";
 import { fontSize } from "../constants/Constants";
 import { addToCart, removeFromCart } from "../../context/actionCreators";
@@ -32,12 +33,21 @@ function Item() {
 
   const sweatersInCart = useSelector((state) => state.selected.selected);
   const [addedToCart, setAddedToCart] = useState(sweatersInCart);
+
   useEffect(() => {
     setAddedToCart(sweatersInCart);
   }, [sweatersInCart]);
 
   const [size, setSize] = useState("");
   const [color, setColor] = useState("");
+
+  const [numberOfItemsToAddToCart, setNumberOfItemsToAddToCart] = useState(0);
+
+  useEffect(() => {
+    Object.keys(addedToCart).includes(id)
+      ? setNumberOfItemsToAddToCart(addedToCart[id])
+      : setNumberOfItemsToAddToCart(0);
+  }, [addedToCart, id]);
 
   const handleSizeChange = (event) => {
     setSize(event.target.value);
@@ -49,12 +59,22 @@ function Item() {
 
   const handleToggleCart = useCallback(
     (id) => {
-      addedToCart.includes(id)
+      Object.keys(addedToCart).includes(id)
         ? dispatch(removeFromCart(id))
-        : dispatch(addToCart(id));
+        : dispatch(addToCart(id, numberOfItemsToAddToCart));
     },
-    [dispatch, addedToCart]
+    [dispatch, addedToCart, numberOfItemsToAddToCart]
   );
+
+  const decrement = useCallback(() => {
+    numberOfItemsToAddToCart > 0
+      ? setNumberOfItemsToAddToCart(numberOfItemsToAddToCart - 1)
+      : console.log("Amount of items cannot be negative");
+  }, [numberOfItemsToAddToCart]);
+
+  const increment = useCallback(() => {
+    setNumberOfItemsToAddToCart(numberOfItemsToAddToCart + 1);
+  }, [numberOfItemsToAddToCart]);
 
   let back = (e) => {
     e.stopPropagation();
@@ -129,8 +149,6 @@ function Item() {
                 { id: 3, value: 42 },
               ]}
             />
-          </CriteriaSelectStyled>
-          <CriteriaSelectStyled>
             <CriteriaSelect
               label="Color"
               state={color}
@@ -143,6 +161,14 @@ function Item() {
               ]}
             />
           </CriteriaSelectStyled>
+          <ButtonGroupStyled
+            color="primary"
+            aria-label="outlined primary button group"
+          >
+            <Button onClick={decrement}>-</Button>
+            <Button>{numberOfItemsToAddToCart}</Button>
+            <Button onClick={increment}>+</Button>
+          </ButtonGroupStyled>
           <Button
             id={id}
             size="large"
@@ -151,7 +177,9 @@ function Item() {
             style={button.roundedButton}
             onClick={() => handleToggleCart(id)}
           >
-            {addedToCart.includes(id) ? "Remove from cart" : "Add to card"}
+            {Object.keys(addedToCart).includes(id)
+              ? "Remove from cart"
+              : "Add to card"}
           </Button>
         </InfoStyled>
       </ModalStyled>
