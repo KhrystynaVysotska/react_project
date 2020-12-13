@@ -11,12 +11,12 @@ import Slider from "react-slick";
 import { itemPreview } from "../constants/Constants";
 import Avatar from "@material-ui/core/Avatar";
 import CriteriaSelect from "../pages/CriteriaSelect";
+import Counter from "../Counter.js";
 import CriteriaSelectStyled from "../styles/CriteriaSelect.styled.js";
-import ButtonGroupStyled from "../styles/CustomButtonGroup.styled.js";
 import AddToCartButtonStyled from "../styles/AddToCartButton.styled.js";
-import Button from "@material-ui/core/Button";
 import { fontSize } from "../constants/Constants";
 import { addToCart, removeFromCart } from "../../context/actionCreators";
+import Button from "@material-ui/core/Button";
 
 function Item() {
   const dispatch = useDispatch();
@@ -162,15 +162,11 @@ function Item() {
               ]}
             />
           </CriteriaSelectStyled>
-          <ButtonGroupStyled
-            size="large"
-            color="primary"
-            aria-label="outlined primary button group"
-          >
-            <Button onClick={decrement}>-</Button>
-            <Button color="default">{numberOfItemsToAddToCart}</Button>
-            <Button onClick={increment}>+</Button>
-          </ButtonGroupStyled>
+          <Counter
+            decrement={decrement}
+            increment={increment}
+            number={numberOfItemsToAddToCart}
+          />
           <AddToCartButtonStyled>
             <Button
               id={id}
@@ -182,7 +178,7 @@ function Item() {
             >
               {Object.keys(addedToCart).includes(id)
                 ? "Remove from cart"
-                : "Add to card"}
+                : "Add to cart"}
             </Button>
           </AddToCartButtonStyled>
         </InfoStyled>
