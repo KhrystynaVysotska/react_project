@@ -16,7 +16,7 @@ export const selected = (state = initialState, action) => {
       return {
         ...state,
         selected: Object.keys(state.selected).reduce((new_state, key) => {
-          if (key !== action.payload) {
+          if (key != action.payload) {
             new_state[key] = state.selected[key];
           }
           return new_state;
