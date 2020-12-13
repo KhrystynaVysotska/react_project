@@ -13,6 +13,7 @@ import Avatar from "@material-ui/core/Avatar";
 import CriteriaSelect from "../pages/CriteriaSelect";
 import CriteriaSelectStyled from "../styles/CriteriaSelect.styled.js";
 import ButtonGroupStyled from "../styles/CustomButtonGroup.styled.js";
+import AddToCartButtonStyled from "../styles/AddToCartButton.styled.js";
 import Button from "@material-ui/core/Button";
 import { fontSize } from "../constants/Constants";
 import { addToCart, removeFromCart } from "../../context/actionCreators";
@@ -162,25 +163,28 @@ function Item() {
             />
           </CriteriaSelectStyled>
           <ButtonGroupStyled
+            size="large"
             color="primary"
             aria-label="outlined primary button group"
           >
             <Button onClick={decrement}>-</Button>
-            <Button>{numberOfItemsToAddToCart}</Button>
+            <Button color="default">{numberOfItemsToAddToCart}</Button>
             <Button onClick={increment}>+</Button>
           </ButtonGroupStyled>
-          <Button
-            id={id}
-            size="large"
-            variant="contained"
-            color="primary"
-            style={button.roundedButton}
-            onClick={() => handleToggleCart(id)}
-          >
-            {Object.keys(addedToCart).includes(id)
-              ? "Remove from cart"
-              : "Add to card"}
-          </Button>
+          <AddToCartButtonStyled>
+            <Button
+              id={id}
+              size="large"
+              variant="contained"
+              color="primary"
+              style={button.roundedButton}
+              onClick={() => handleToggleCart(id)}
+            >
+              {Object.keys(addedToCart).includes(id)
+                ? "Remove from cart"
+                : "Add to card"}
+            </Button>
+          </AddToCartButtonStyled>
         </InfoStyled>
       </ModalStyled>
     </ItemStyled>
