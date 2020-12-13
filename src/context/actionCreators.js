@@ -67,13 +67,17 @@ const removeMarkFavorite = (sweaterId) => ({
   payload: sweaterId,
 });
 
-export const addToCart = (sweaterId) => (dispatch) => {
-  dispatch(addSelected(sweaterId));
+export const addToCart = (sweaterId, numberOfItemsToAddToCart) => (
+  dispatch
+) => {
+  const payload = {};
+  payload[sweaterId] = numberOfItemsToAddToCart;
+  dispatch(addSelected(payload));
 };
 
-const addSelected = (sweaterId) => ({
+const addSelected = (payload) => ({
   type: ADD_SELECTED,
-  payload: sweaterId,
+  payload,
 });
 
 export const removeFromCart = (sweaterId) => (dispatch) => {

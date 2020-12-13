@@ -1,7 +1,7 @@
 import { ADD_SELECTED, REMOVE_SELECTED } from "../actionTypes";
 
 const initialState = {
-  selected: [],
+  selected: {},
 };
 
 export const selected = (state = initialState, action) => {
@@ -9,13 +9,18 @@ export const selected = (state = initialState, action) => {
     case ADD_SELECTED: {
       return {
         ...state,
-        selected: [...state.selected, action.payload],
+        selected: { ...state.selected, ...action.payload },
       };
     }
     case REMOVE_SELECTED: {
       return {
         ...state,
-        selected: state.selected.filter((item) => item !== action.payload),
+        selected: Object.keys(state.selected).reduce((new_state, key) => {
+          if (key !== action.payload) {
+            new_state[key] = state.selected[key];
+          }
+          return new_state;
+        }, {}),
       };
     }
     default:

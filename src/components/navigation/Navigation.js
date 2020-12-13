@@ -19,7 +19,7 @@ function Navigation() {
   );
 
   const [numberOfSweatersInCart, setNumberOfSweaterInCart] = useState(
-    addedToCartSweaters.length
+    Object.keys(addedToCartSweaters).length
   );
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function Navigation() {
   }, [selectedFavoriteSweaters]);
 
   useEffect(() => {
-    setNumberOfSweaterInCart(addedToCartSweaters.length);
+    setNumberOfSweaterInCart(Object.keys(addedToCartSweaters).length);
   }, [addedToCartSweaters]);
 
   const [scrolled, setScrolled] = useState(false);
