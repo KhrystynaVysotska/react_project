@@ -6,7 +6,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 function CriteriaSelect({ label, state, handleChange, fields }) {
   return (
-    <FormControl variant="outlined" style={{ width: "100%"}}>
+    <FormControl variant="outlined" style={{ width: "45%" }}>
       <InputLabel>{label}</InputLabel>
       <Select value={state} onChange={handleChange} label={label}>
         <MenuItem value="">
