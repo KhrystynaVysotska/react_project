@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { fontSize, colors } from "../constants/Constants.js";
 
 const CartNavigationStyled = styled.div`
-  margin-top: ${fontSize.fs84};
+  margin-top: ${fontSize.fs72};
   width: 11%;
   display: flex;
   align-items: center;
