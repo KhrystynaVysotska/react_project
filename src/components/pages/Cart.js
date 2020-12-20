@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useLocation, useHistory } from "react-router-dom";
 import Container from "../styles/Container.js";
 import TableStyled from "../styles/CustomTable.styled";
 import TotalAmountStyled from "../styles/TotalAmount.styled";
@@ -21,6 +22,8 @@ function Cart() {
   const sweaters = useSelector((state) => state.sweaters.sweaters);
   const [selectedSweaters, setSelectedSweaters] = useState([]);
   const dispatch = useDispatch();
+  let location = useLocation();
+  let history = useHistory();
 
   useEffect(() => {
     const sweaters_array = Object.keys(sweatersInCart).map((sweaterId) => {
@@ -124,6 +127,20 @@ function Cart() {
           variant="contained"
           color="primary"
           style={button.roundedButton}
+          onClick={() =>
+            history.push(
+              totalAmount !== 0
+                ? {
+                    pathname: `/checkout`,
+                    state: {
+                      checkout_popup: location,
+                    },
+                  }
+                : {
+                    pathname: `/catalog`,
+                  }
+            )
+          }
         >
           {totalAmount !== 0 ? "Proceed to checkout" : "Shop now"}
         </Button>
