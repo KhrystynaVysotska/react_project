@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.0",
     "bootstrap": "^4.5.3",
+    "formik": "^2.2.6",
     "jquery": "^3.5.1",
     "normalize.css": "^8.0.1",
     "react": "^17.0.1",
@@ -26,7 +27,8 @@
     "reselect": "^4.0.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.2.1",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "yup": "^0.32.8"
   },
   "scripts": {
     "start": "react-scripts start",
