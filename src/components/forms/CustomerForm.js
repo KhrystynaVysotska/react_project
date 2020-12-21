@@ -17,20 +17,20 @@ function CustomerForm() {
 
   const validationSchema = Yup.object({
     firstName: Yup.string()
-      .min(2, "First name must be at least 2 characters")
-      .max(50, "First name must be 50 characters or less")
-      .required("First name is a required field"),
+      .min(2, "Must be at least 2 characters")
+      .max(50, "Must be 50 characters or less")
+      .required("This is a required field"),
     lastName: Yup.string()
-      .min(2, "Last name must be at least 2 characters long")
-      .max(50, "Last name must be 50 characters or less")
-      .required("Last name is require field"),
+      .min(2, "Must be at least 2 characters")
+      .max(50, "Must be 50 characters or less")
+      .required("This is require field"),
     email: Yup.string().email("Email format is incorrect"),
     phone: Yup.string()
       .trim()
-      .matches(/\+380/, "Phone number must start with +380")
-      .matches(/\+380[0-9 | \s+]+/, "Phone number must contain 13 digits")
-      .length(13, "Phone number should be exactly 13 characters")
-      .required("Phone number is a required field"),
+      .matches(/\+380/, "Must start with +380")
+      .matches(/\+380[0-9 | \s+]+/, "Must contain 13 digits")
+      .length(13, "Must be exactly 13 characters")
+      .required("This is a required field"),
     city: Yup.string()
       .oneOf(
         [
@@ -48,8 +48,8 @@ function CustomerForm() {
   });
   return (
     <Formik initialValues={initialValues} validationSchema={validationSchema}>
-      {(values, errors) => {
-        console.log(JSON.stringify(values, errors));
+      {({ values, errors }) => {
+        console.log(JSON.stringify(errors));
         return (
           <StyledForm>
             <div className="name">
