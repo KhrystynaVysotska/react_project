@@ -12,6 +12,7 @@ const ModalSuccessStyled = styled.div`
   padding: ${fontSize.fs28} ${fontSize.fs72};
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   p {
     font-family: "Poppins";
     font-weight: bold;
@@ -19,6 +20,10 @@ const ModalSuccessStyled = styled.div`
     font-size: 18px;
     line-height: 1.5;
     padding: 0 15px;
+  }
+  img {
+    width: 98px;
+    height: 98px;
   }
 `;
 
