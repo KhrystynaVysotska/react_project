@@ -2,7 +2,10 @@ import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import StyledForm from "../styles/StyledForm.styled";
-import Checkbox from "@material-ui/core/Checkbox";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControl from "@material-ui/core/FormControl";
+import CustomCheckoutCard from "../inputs/CustomCheckoutCard";
+import FormHelperText from "@material-ui/core/FormHelperText";
 
 function ShippingForm() {
   const initialValues = {
@@ -10,18 +13,44 @@ function ShippingForm() {
   };
 
   const validationSchema = Yup.object({
-    standartDelivery: Yup.string()
-      .required("Choose at least one delivery type")
-      .oneOf(["standart", "fast"]),
+    deliveryType: Yup.string()
+      .oneOf(["standart", "fast"], "Delivery type can be only standart or fast")
+      .required("Choose at least one delivery type"),
   });
+
   return (
     <Formik initialValues={initialValues} validationSchema={validationSchema}>
-      {(values, errors) => {
-        console.log(JSON.stringify(values, errors));
+      {({ values, errors }) => {
+        console.log(JSON.stringify(values));
         return (
           <StyledForm>
-            <Checkbox defaultChecked value="standart" name="deliveryType" />
-            <Checkbox value="fast" name="deliveryType" />
+            <FormControl error={true} component="fieldset">
+              <RadioGroup
+                className="cards"
+                aria-label="deliveryType"
+                name="deliveryType"
+                value={values.deliveryType ? values.deliveryType : "standart"}
+                row
+              >
+                <CustomCheckoutCard
+                  title="Standart Delivery"
+                  description="Estimated 14-20 Days Shipping (Duties and taxes may be due upon delivery)"
+                  price="Free"
+                  name="deliveryType"
+                  value="standart"
+                />
+                <CustomCheckoutCard
+                  title="Fast Delivery"
+                  description="Estimated 2-5 Days Shipping (Duties and taxes may be due upon delivery)"
+                  price="$8.00"
+                  name="deliveryType"
+                  value="fast"
+                />
+              </RadioGroup>
+              <FormHelperText>
+                {errors.deliveryType ? errors.deliveryType : ""}
+              </FormHelperText>
+            </FormControl>
           </StyledForm>
         );
       }}
