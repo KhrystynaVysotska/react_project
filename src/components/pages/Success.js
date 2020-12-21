@@ -2,7 +2,7 @@ import React from "react";
 import StyledSuccess from "../styles/Success.styled";
 import ModalSuccessStyled from "../styles/ModalSuccess.styled";
 import { useHistory } from "react-router-dom";
-import success_image from "../../images/success_icon.jpg";
+import success_image from "../../images/success.jpg";
 
 function Success() {
   let history = useHistory();
