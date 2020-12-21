@@ -17,6 +17,12 @@ const StyledForm = styled(Form)`
     justify-content: space-between;
     padding-bottom: ${fontSize.fs28};
   }
+  .cards {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 ${fontSize.fs36};
+  }
 `;
 
 export default StyledForm;
