@@ -9,6 +9,7 @@ function CustomTextInput({ name, ...props }) {
 
   return (
     <TextField
+      id={name}
       name={name}
       {...props}
       {...field}

@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import { Formik } from "formik";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
@@ -15,6 +16,7 @@ import FormButtonsStyled from "./styles/FormButtons.styled";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import StyledFormContent from "./styles/FormContent.styled";
+import * as Yup from "yup";
 
 function getSteps() {
   return ["CUSTOMER INFO", "SHIPPING INFO", "PAYMENT SELECTION"];
@@ -33,8 +35,8 @@ function getStepName(step) {
   }
 }
 
-function getStepContent(step) {
-  switch (step) {
+function getStepContent({ activeStep }) {
+  switch (activeStep) {
     case 0:
       return <CustomerForm />;
     case 1:
@@ -71,6 +73,57 @@ export default function CheckoutStepper() {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    city: "",
+    phone: "+380",
+    email: "",
+    deliveryType: "standart",
+    paymentSelection: "credit_card",
+  };
+
+  const validationSchema = Yup.object({
+    firstName: Yup.string()
+      .min(2, "Must be at least 2 characters")
+      .max(50, "Must be 50 characters or less")
+      .required("This is a required field"),
+    lastName: Yup.string()
+      .min(2, "Must be at least 2 characters")
+      .max(50, "Must be 50 characters or less")
+      .required("This is require field"),
+    email: Yup.string().email("Email format is incorrect"),
+    phone: Yup.string()
+      .trim()
+      .matches(/\+380/, "Must start with +380")
+      .matches(/\+380[0-9 | \s+]+/, "Must contain 13 digits")
+      .length(13, "Must be exactly 13 characters")
+      .required("This is a required field"),
+    city: Yup.string()
+      .oneOf(
+        [
+          "Lviv",
+          "Kyiv",
+          "Ternopil",
+          "Sambir",
+          "Chervonograd",
+          "Chernivtsi",
+          "Ivano-Frankivsk",
+        ],
+        "Sorry! Currently, we don`t provide delivery to this sity"
+      )
+      .required("City is a required field"),
+    deliveryType: Yup.string()
+      .oneOf(["standart", "fast"], "Delivery type can be only standart or fast")
+      .required("Choose at least one delivery type"),
+    paymentSelection: Yup.string()
+      .oneOf(
+        ["credit_card", "pay_pal"],
+        "Payment can be with credit card or pay pal only"
+      )
+      .required("Choose at least one payment type"),
+  });
 
   const useStepIconStyles = makeStyles({
     root: {
@@ -133,7 +186,12 @@ export default function CheckoutStepper() {
         ) : (
           <StyledFormContent>
             <p className="title">{getStepName(activeStep)}</p>
-            {getStepContent(activeStep)}
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+            >
+              {getStepContent({ activeStep })}
+            </Formik>
             <FormButtonsStyled>
               <Button
                 size="small"
