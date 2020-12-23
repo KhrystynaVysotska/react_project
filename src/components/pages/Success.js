@@ -24,9 +24,7 @@ function Success() {
     <StyledSuccess onClick={back}>
       <ModalSuccessStyled onClick={(e) => e.stopPropagation()}>
         <img alt="success" src={success_image} />
-        <p>
-          Thank you, {location.state.values.firstName}! Submitted successfully
-        </p>
+        <p>Thank you, {location.state.values.firstName}!</p>
       </ModalSuccessStyled>
     </StyledSuccess>
   );

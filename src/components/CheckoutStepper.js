@@ -92,7 +92,7 @@ export default function CheckoutStepper() {
     lastName: Yup.string()
       .min(2, "Must be at least 2 characters")
       .max(50, "Must be 50 characters or less")
-      .required("This is require field"),
+      .required("This is required field"),
     email: Yup.string().email("Email format is incorrect"),
     phone: Yup.string()
       .trim()
