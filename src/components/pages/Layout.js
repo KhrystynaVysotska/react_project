@@ -14,7 +14,9 @@ function Layout() {
 
   return (
     <>
-      <Switch location={background || checkout_popup || location}>
+      <Switch
+        location={success_popup || checkout_popup || background || location}
+      >
         <Route path="/cart">
           <Cart />
         </Route>
@@ -32,14 +34,15 @@ function Layout() {
         </Route>
       )}
 
-      {checkout_popup && (
-        <Route path="/checkout">
-          <Checkout />
-        </Route>
-      )}
       {success_popup && (
         <Route path="/success">
           <Success />
+        </Route>
+      )}
+
+      {checkout_popup && (
+        <Route path="/checkout">
+          <Checkout />
         </Route>
       )}
     </>

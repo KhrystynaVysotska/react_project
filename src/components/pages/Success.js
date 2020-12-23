@@ -1,21 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import StyledSuccess from "../styles/Success.styled";
 import ModalSuccessStyled from "../styles/ModalSuccess.styled";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import success_image from "../../images/success.jpg";
+import { useDispatch } from "react-redux";
+import { clearCart } from "../../context/actionCreators";
 
 function Success() {
   let history = useHistory();
+  let location = useLocation();
+  const dispatch = useDispatch();
 
-  let back = (e) => {
-    e.stopPropagation();
-    history.goBack();
+  useEffect(() => {
+    return () => {
+      dispatch(clearCart());
+    };
+  }, []);
+
+  let back = () => {
+    history.push("/cart");
   };
   return (
     <StyledSuccess onClick={back}>
       <ModalSuccessStyled onClick={(e) => e.stopPropagation()}>
         <img alt="success" src={success_image} />
-        <p>Submitted successfully</p>
+        <p>
+          Thank you, {location.state.values.firstName}! Submitted successfully
+        </p>
       </ModalSuccessStyled>
     </StyledSuccess>
   );

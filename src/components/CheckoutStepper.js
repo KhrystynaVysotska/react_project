@@ -8,7 +8,6 @@ import Button from "@material-ui/core/Button";
 import Check from "@material-ui/icons/Check";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import { fontSize } from "./constants/Constants";
 import CustomerForm from "./forms/CustomerForm";
 import ShippingForm from "./forms/ShippingForm";
 import PaymentSelectionForm from "./forms/PaymentSelectionForm";
@@ -59,12 +58,13 @@ export default function CheckoutStepper() {
     history.goBack();
   };
 
-  const handleNext = () => {
+  const handleNext = (values) => {
     activeStep === steps.length - 1
       ? history.push({
           pathname: `/success`,
           state: {
-            success_popup: location,
+            success_popup: location.state.checkout_popup,
+            values,
           },
         })
       : setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -187,37 +187,48 @@ export default function CheckoutStepper() {
           <StyledFormContent>
             <p className="title">{getStepName(activeStep)}</p>
             <Formik
+              isInitialValid={false}
               initialValues={initialValues}
               validationSchema={validationSchema}
             >
-              {getStepContent({ activeStep })}
+              {({ isValid, values }) => (
+                <>
+                  {getStepContent({ activeStep })}
+                  <FormButtonsStyled>
+                    <Button
+                      size="small"
+                      onClick={activeStep === 0 ? back : handleBack}
+                      startIcon={<ArrowBackIcon fontSize="small" />}
+                    >
+                      {activeStep === 0
+                        ? "Return to cart"
+                        : `Return to ${getStepName(activeStep - 1)}`}
+                    </Button>
+                    <Button
+                      size="small"
+                      style={{
+                        color: isValid ? "#784af4" : "rgb(108 108 108)",
+                        backgroundColor: "transparent",
+                      }}
+                      onClick={() => handleNext(values)}
+                      disabled={!isValid}
+                      endIcon={
+                        <ArrowForwardIcon
+                          fontSize="small"
+                          style={{
+                            color: isValid ? "#784af4" : "rgb(108 108 108)",
+                          }}
+                        />
+                      }
+                    >
+                      {activeStep === steps.length - 1
+                        ? "Continue to submission"
+                        : `Continue to ${getStepName(activeStep + 1)}`}
+                    </Button>
+                  </FormButtonsStyled>
+                </>
+              )}
             </Formik>
-            <FormButtonsStyled>
-              <Button
-                size="small"
-                onClick={activeStep === 0 ? back : handleBack}
-                startIcon={<ArrowBackIcon fontSize="small" />}
-              >
-                {activeStep === 0
-                  ? "Return to cart"
-                  : `Return to ${getStepName(activeStep - 1)}`}
-              </Button>
-              <Button
-                size="small"
-                style={{ color: "#784af4", backgroundColor: "transparent" }}
-                onClick={handleNext}
-                endIcon={
-                  <ArrowForwardIcon
-                    fontSize="small"
-                    style={{ color: "#784af4" }}
-                  />
-                }
-              >
-                {activeStep === steps.length - 1
-                  ? "Continue to submission"
-                  : `Continue to ${getStepName(activeStep + 1)}`}
-              </Button>
-            </FormButtonsStyled>
           </StyledFormContent>
         )}
       </div>

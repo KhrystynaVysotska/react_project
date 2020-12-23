@@ -1,4 +1,4 @@
-import { ADD_SELECTED, REMOVE_SELECTED } from "../actionTypes";
+import { ADD_SELECTED, REMOVE_SELECTED, CLEAR_CART } from "../actionTypes";
 
 const initialState = {
   selected: {},
@@ -21,6 +21,12 @@ export const selected = (state = initialState, action) => {
           }
           return new_state;
         }, {}),
+      };
+    }
+    case CLEAR_CART: {
+      return {
+        ...state,
+        selected: {},
       };
     }
     default:

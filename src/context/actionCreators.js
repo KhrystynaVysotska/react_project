@@ -6,6 +6,7 @@ import {
   INIT_SWEATERS,
   LOADING_SWEATERS,
   FAILED_SWEATERS,
+  CLEAR_CART,
 } from "./actionTypes";
 import { getAllSweaters, getFilteredSweaters } from "../api/api";
 
@@ -84,7 +85,15 @@ export const removeFromCart = (sweaterId) => (dispatch) => {
   dispatch(removeSelected(sweaterId));
 };
 
+export const clearCart = () => (dispatch) => {
+  dispatch(removeAllSelected());
+};
+
 const removeSelected = (sweaterId) => ({
   type: REMOVE_SELECTED,
   payload: sweaterId,
+});
+
+const removeAllSelected = () => ({
+  type: CLEAR_CART,
 });
