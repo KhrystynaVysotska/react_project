@@ -15,7 +15,6 @@ function CustomTextInput({ name, ...props }) {
       {...field}
       error={error}
       helperText={errorMessage}
-      variant="outlined"
     />
   );
 }
