@@ -56,7 +56,7 @@ function Navigation() {
       <MenuStyled>
         <ul>
           <li>
-            <NavLink exact to="/" activeClassName="active">
+            <NavLink exact to="/home" activeClassName="active">
               Home
             </NavLink>
           </li>
