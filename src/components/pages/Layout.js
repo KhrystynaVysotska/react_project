@@ -1,69 +1,75 @@
 import React, { useState } from "react";
-import { Switch, Route, Redirect, Link, useLocation } from "react-router-dom";
+import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import Home from "../pages/Home.js";
 import Catalog from "../pages/Catalog.js";
 import Cart from "../pages/Cart.js";
 import Item from "../pages/Item.js";
+import Login from "../pages/Login";
 import Success from "../pages/Success";
 import Checkout from "../pages/Checkout";
 import Footer from "../footer/Footer";
 import Navigation from "../navigation/Navigation";
 import ProtectedRoute from "../navigation/ProtectedRoute";
+import Registration from "./Registration";
 
 function Layout() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    !!localStorage.getItem("email")
+  );
   let location = useLocation();
   let background = location.state && location.state.background;
   let checkout_popup = location.state && location.state.checkout_popup;
   let success_popup = location.state && location.state.success_popup;
 
-  const login = () => {
+  const login = ({ email, password }) => {
+    localStorage.setItem("email", email);
     setIsAuthenticated(true);
   };
 
   const logout = () => {
+    localStorage.removeItem("email");
     setIsAuthenticated(false);
   };
 
   return (
     <>
-      {isAuthenticated && <Navigation />}
+      {localStorage.getItem("email") && <Navigation logout={logout} />}
       <Switch
         location={success_popup || checkout_popup || background || location}
       >
         <Route path="/" exact>
-          {isAuthenticated ? (
+          <Redirect to="/registration" />
+        </Route>
+
+        <Route path="/registration">
+          {localStorage.getItem("email") ? (
             <Redirect to="/home" />
           ) : (
-            <div>
-              <h1>Homepage</h1>
-              <Link to="/home">Go to home</Link>
-              <Link to="/catalog">Go to catalog</Link>
-              <Link to="/cart">Go to cart</Link>
-              <Link to="/item/63">Go to item</Link>
-              <Link to="/checkout">Go to checkout</Link>
-              <Link to="/success">Go to success</Link>
-              <br></br>
-              <button onClick={login}>Log in</button>
-            </div>
+            <Registration login={login} />
           )}
         </Route>
+
+        <Route path="/login">
+          {localStorage.getItem("email") ? (
+            <Redirect to="/home" />
+          ) : (
+            <Login login={login} />
+          )}
+        </Route>
+
         <ProtectedRoute
           isAuthenticated={isAuthenticated}
           path="/cart"
-          logout={logout}
           component={Cart}
         />
         <ProtectedRoute
           isAuthenticated={isAuthenticated}
           path="/catalog"
-          logout={logout}
           component={Catalog}
         />
         <ProtectedRoute
           isAuthenticated={isAuthenticated}
           path="/home"
-          logout={logout}
           component={Home}
         />
         <Route path="*">
@@ -88,7 +94,7 @@ function Layout() {
           <Checkout />
         </Route>
       )}
-      {isAuthenticated && <Footer />}
+      {localStorage.getItem("email") && <Footer />}
     </>
   );
 }
