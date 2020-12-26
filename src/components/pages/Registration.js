@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Formik } from "formik";
 import CustomTextInput from "../inputs/CustomTextInput";
-import Login from "./Login";
 import Button from "@material-ui/core/Button";
 import AccountCircleIconStyled from "../styles/AccountCircleIcon.styled";
 import EntryFormStyled from "../styles/EntryForm.styled";

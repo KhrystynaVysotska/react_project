@@ -15,7 +15,7 @@ function Success() {
     return () => {
       dispatch(clearCart());
     };
-  }, []);
+  }, [dispatch]);
 
   let back = () => {
     history.push("/cart");

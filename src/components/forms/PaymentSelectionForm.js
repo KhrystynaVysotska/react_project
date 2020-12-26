@@ -1,6 +1,5 @@
 import React from "react";
-import { Formik, useFormikContext } from "formik";
-import * as Yup from "yup";
+import { useFormikContext } from "formik";
 import StyledForm from "../styles/StyledForm.styled";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControl from "@material-ui/core/FormControl";

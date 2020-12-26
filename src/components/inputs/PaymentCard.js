@@ -1,5 +1,4 @@
 import React from "react";
-import { useField } from "formik";
 import CustomRadio from "./CustomRadio";
 import PaymentCardStyled from "../styles/PaymentCard.styled";
 

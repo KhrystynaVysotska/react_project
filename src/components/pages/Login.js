@@ -7,7 +7,6 @@ import * as Yup from "yup";
 import CustomTextInput from "../inputs/CustomTextInput";
 import StyledForm from "../styles/LoginRegisterForm.styled.js";
 import Button from "@material-ui/core/Button";
-import Registration from "./Registration";
 import loginImage from "../../images/loginImage.png";
 
 function Login({ login }) {

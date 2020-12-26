@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import Table from "@material-ui/core/Table";
 import { fontSize } from "../constants/Constants";
