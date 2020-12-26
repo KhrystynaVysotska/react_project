@@ -7,8 +7,11 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import NavigationStyled from "../styles/Navigation.styled.js";
 import IconStyled from "../styles/Icon.styled.js";
 import MenuStyled from "../styles/Menu.styled.js";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
 
-function Navigation() {
+function Navigation({ logout }) {
   const selectedFavoriteSweaters = useSelector(
     (state) => state.favorites.favorites
   );
@@ -92,6 +95,19 @@ function Navigation() {
         >
           <FavoriteBorderIcon />
         </Badge>
+        <Tooltip title="Sign out" arrow>
+          <IconButton
+            aria-label="sign out"
+            onClick={logout}
+            style={{
+              padding: 0,
+              color: "#000",
+              backgroundColor: "transparent",
+            }}
+          >
+            <ExitToAppIcon />
+          </IconButton>
+        </Tooltip>
       </IconStyled>
     </NavigationStyled>
   );
