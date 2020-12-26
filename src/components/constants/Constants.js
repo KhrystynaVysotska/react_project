@@ -49,6 +49,8 @@ export const colors = {
   linkedin: "#007AB9",
   facebook: "#007AB9",
   card: "#dcdce35e",
+  lightprimary: "#b3c8e3",
+  darkprimary: "#84a3cc",
 };
 
 export const seasons = [
