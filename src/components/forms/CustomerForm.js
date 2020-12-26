@@ -15,6 +15,7 @@ function CustomerForm() {
           label="First Name"
           name="firstName"
           type="text"
+          variant="outlined"
           required
         />
         <CustomTextInput
@@ -22,6 +23,7 @@ function CustomerForm() {
           label="Last Name"
           name="lastName"
           type="text"
+          variant="outlined"
           required
         />
       </div>
@@ -30,6 +32,7 @@ function CustomerForm() {
           className="email"
           label="Email"
           name="email"
+          variant="outlined"
           type="text"
         />
         <CustomTextInput
@@ -37,6 +40,7 @@ function CustomerForm() {
           label="Phone"
           name="phone"
           type="text"
+          variant="outlined"
           required
         />
       </div>
